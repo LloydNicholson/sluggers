@@ -837,25 +837,6 @@
             }
         },
         {
-            "Key": "52ae0d67-abb9-4c41-9cce-b114c091700a",
-            "Value": {
-                "id": "5316cf24-b842-4c84-90e8-ec4b7eacffa9",
-                "modelName": "GMResourceInfo",
-                "mvc": "1.0",
-                "configDeltaFiles": [
-                    
-                ],
-                "configDeltas": [
-                    
-                ],
-                "resourceCreationConfigs": [
-                    "default"
-                ],
-                "resourcePath": "sprites\/s_enemy\/s_enemy.yy",
-                "resourceType": "GMSprite"
-            }
-        },
-        {
             "Key": "5456041d-d97e-405b-8cd9-8f5f86b2c5d1",
             "Value": {
                 "id": "f1caf467-2d9d-4e44-8a69-0e07a355ae78",
