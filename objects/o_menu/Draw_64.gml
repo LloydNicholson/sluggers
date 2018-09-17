@@ -1,6 +1,6 @@
 if (!global.pause) exit;
 
-var g_width = global.view_width, g_height = global.view_height;
+var g_width = camera.view_w, g_height = camera.view_h;
 
 var ds_grid = menu_pages[page], ds_height = ds_grid_height(ds_grid);
 var y_buffer = 32, x_buffer = 16;

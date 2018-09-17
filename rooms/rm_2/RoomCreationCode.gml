@@ -1,1 +1,0 @@
-global.creations_allowed = 10;
