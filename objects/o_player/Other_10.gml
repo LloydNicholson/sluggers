@@ -1,11 +1,6 @@
 /// @desc Air
-// Collision with ground
-vspeed_ += gravity_;
-sprite_index = jump_index_;
-
 player_jump_height();
-
-hspeed_ += air_speed_/4;
+air_player_move();
 
 // Change to ground state
 if place_meeting(x, y+1, collision_object_) { state = GROUND; } 

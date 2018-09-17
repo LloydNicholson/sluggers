@@ -4,7 +4,7 @@ draw_set_halign(fa_left);
 draw_set_valign(fa_bottom);
 
 #region Draw fade
-var g_width = global.view_width, g_height = global.view_height;
+var g_width = camera.view_w, g_height = camera.view_h;
 var c = c_black, black_alpha = 0;
 
 draw_set_alpha(black_alpha);

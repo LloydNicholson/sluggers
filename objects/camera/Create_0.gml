@@ -1,11 +1,11 @@
-scale = 1; // if you want to change view size - bigger is > 1 and smaller is < 1
-view_w = global.view_width*scale;
-view_h = global.view_height*scale;
-
-follow_speed = 0.7;
-
 x = 0;
-y = room_height;
+y = 0;
+
+scale = 1; // Set camera sizre by changing this variable
+
+view_h = global.view_height*scale;
+view_w = global.view_width*scale;
+
 
 
 

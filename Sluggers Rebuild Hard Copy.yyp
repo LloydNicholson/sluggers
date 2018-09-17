@@ -58,6 +58,25 @@
             }
         },
         {
+            "Key": "034e5cfb-1101-46c7-b597-80aff742527d",
+            "Value": {
+                "id": "adfdf579-3423-41aa-956f-6631b66f517e",
+                "modelName": "GMResourceInfo",
+                "mvc": "1.0",
+                "configDeltaFiles": [
+                    
+                ],
+                "configDeltas": [
+                    
+                ],
+                "resourceCreationConfigs": [
+                    "default"
+                ],
+                "resourcePath": "scripts\/air_player_move\/air_player_move.yy",
+                "resourceType": "GMScript"
+            }
+        },
+        {
             "Key": "0396847b-ba8a-4bf4-ae82-b13186441ffd",
             "Value": {
                 "id": "7468a865-b9c1-412e-98ca-d3d12629a00d",
@@ -530,25 +549,6 @@
                 ],
                 "resourcePath": "sounds\/snd_test\/snd_test.yy",
                 "resourceType": "GMSound"
-            }
-        },
-        {
-            "Key": "35d74a71-02ed-463a-a0b1-f7388299a7e8",
-            "Value": {
-                "id": "681a264f-dafb-43bc-a880-e348f9d6a12a",
-                "modelName": "GMResourceInfo",
-                "mvc": "1.0",
-                "configDeltaFiles": [
-                    
-                ],
-                "configDeltas": [
-                    
-                ],
-                "resourceCreationConfigs": [
-                    "default"
-                ],
-                "resourcePath": "objects\/camera\/camera.yy",
-                "resourceType": "GMObject"
             }
         },
         {
@@ -1407,6 +1407,25 @@
             }
         },
         {
+            "Key": "a75bd305-3c4e-4e1b-9ae9-fd6fc0e72cde",
+            "Value": {
+                "id": "76ba7e0b-b161-46a2-bc54-b45035ba5f1d",
+                "modelName": "GMResourceInfo",
+                "mvc": "1.0",
+                "configDeltaFiles": [
+                    
+                ],
+                "configDeltas": [
+                    
+                ],
+                "resourceCreationConfigs": [
+                    "default"
+                ],
+                "resourcePath": "objects\/camera\/camera.yy",
+                "resourceType": "GMObject"
+            }
+        },
+        {
             "Key": "a887e989-9b11-4bf8-ab02-87fc214163e8",
             "Value": {
                 "id": "aca55694-ed0a-4dda-bdc6-aeefc1e09f10",
@@ -1632,6 +1651,25 @@
                 ],
                 "resourcePath": "objects\/o_game\/o_game.yy",
                 "resourceType": "GMObject"
+            }
+        },
+        {
+            "Key": "c3fce9f7-dc29-4493-9f37-e9633472f904",
+            "Value": {
+                "id": "ca6351c2-65a8-436a-ab4c-28d6aa17bfac",
+                "modelName": "GMResourceInfo",
+                "mvc": "1.0",
+                "configDeltaFiles": [
+                    
+                ],
+                "configDeltas": [
+                    
+                ],
+                "resourceCreationConfigs": [
+                    "default"
+                ],
+                "resourcePath": "scripts\/ground_player_move\/ground_player_move.yy",
+                "resourceType": "GMScript"
             }
         },
         {
@@ -2137,6 +2175,11 @@
         "9afd4881-fbe1-482d-9060-535e182bb4ff",
         "bce4deca-ba7f-41fb-b689-110864c18f1f",
         "71e070df-ffac-420d-b184-f94a3d0fb749",
+        "c3fce9f7-dc29-4493-9f37-e9633472f904",
+        "034e5cfb-1101-46c7-b597-80aff742527d",
+        "41c62bac-23bf-4159-9710-18fe64c41dc6",
+        "632ec5ca-4e81-480f-aebd-6ddb8d8f80fa",
+        "4500fd69-eea7-4d28-8454-349efb25515c",
         "8c366455-9140-4fde-8248-45eb87a4b836",
         "62ed5436-cb76-402e-aad1-1c7bf1938f7d",
         "10ea45f9-e976-46ab-96cb-87f3ce6d6dba",
@@ -2155,10 +2198,7 @@
         "f7ce861e-05a6-4346-add3-b0f910ac75d6",
         "b66c06a5-3e85-44b3-b6d2-0a662501f0d1",
         "7310678f-3fb1-4403-adc4-0b8c47bb7899",
-        "af3880cb-c5ff-4034-ab6a-8810c3b796ba",
-        "41c62bac-23bf-4159-9710-18fe64c41dc6",
-        "632ec5ca-4e81-480f-aebd-6ddb8d8f80fa",
-        "4500fd69-eea7-4d28-8454-349efb25515c"
+        "af3880cb-c5ff-4034-ab6a-8810c3b796ba"
     ],
     "tutorial": ""
 }

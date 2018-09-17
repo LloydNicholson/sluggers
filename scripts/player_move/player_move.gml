@@ -9,6 +9,3 @@ var hinput = (right_key || right_axis) - (left_key || left_axis);
 hspeed_ += hinput*acceleration_;
 hspeed_ = clamp(hspeed_+hinput, -max_speed_, max_speed_);
 
-
- 
-
