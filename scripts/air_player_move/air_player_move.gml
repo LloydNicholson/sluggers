@@ -1,4 +1,3 @@
-vspeed_ += gravity_;
 sprite_index = jump_index_;
 image_speed = 0;
 
