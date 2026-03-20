@@ -34,8 +34,8 @@ if dead_ {
 image_yscale += (target_yscale_ - image_yscale) * 0.25;
 image_xscale += (target_xscale_ - image_xscale) * 0.25;
 if abs(image_yscale - target_yscale_) < 0.01 { image_yscale = target_yscale_; }
-if abs(abs(image_xscale) - abs(target_xscale_)) < 0.01 {
-	image_xscale = target_xscale_ * sign(image_xscale != 0 ? image_xscale : 1);
+if abs(image_xscale - target_xscale_) < 0.01 {
+	image_xscale = target_xscale_;
 }
 
 // Run state machine (AIR=0, GROUND=1, WALL=2)
@@ -52,4 +52,3 @@ if invincible_ > 0 {
 } else {
 	image_blend = c_white;
 }
-

@@ -31,7 +31,8 @@ if place_meeting(x + hspeed_, y, o_solid) {
 // Edge detection - don't walk off platforms (only when patrolling, not chasing)
 if !angry_ {
 	var _look_x = x + sign(hspeed_) * 20;
-	if !place_meeting(_look_x, y + 20, o_solid) && !place_meeting(x, y + 1, o_solid) == false {
+	var _on_ground = place_meeting(x, y + 1, o_solid);
+	if _on_ground && !place_meeting(_look_x, y + 20, o_solid) {
 		hspeed_ = -hspeed_;
 	}
 }
