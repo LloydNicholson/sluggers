@@ -1,12 +1,67 @@
-[gd_scene load_steps=4 format=3 uid="uid://bplayer001"]
+[gd_scene load_steps=19 format=3 uid="uid://bplayer001"]
 
 [ext_resource type="Script" path="res://scenes/player/Player.gd" id="1_player"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_idle_0.png" id="2_pi0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_idle_1.png" id="3_pi1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_idle_2.png" id="4_pi2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_walk_0.png" id="5_pw0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_walk_1.png" id="6_pw1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_walk_2.png" id="7_pw2"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_walk_3.png" id="8_pw3"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_walk_4.png" id="9_pw4"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_walk_5.png" id="10_pw5"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_walk_6.png" id="11_pw6"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_jump_0.png" id="12_pj0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_jump_1.png" id="13_pj1"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_player_slide.png" id="14_pslide"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(16, 28)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_feet"]
-size = Vector2(12, 4)
+[sub_resource type="SpriteFrames" id="SpriteFrames_player"]
+animations = [{
+"frames": [{"duration": 1.0,
+"texture": ExtResource("2_pi0")}, {
+"duration": 1.0,
+"texture": ExtResource("3_pi1")}, {
+"duration": 1.0,
+"texture": ExtResource("4_pi2")}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{"duration": 1.0,
+"texture": ExtResource("5_pw0")}, {
+"duration": 1.0,
+"texture": ExtResource("6_pw1")}, {
+"duration": 1.0,
+"texture": ExtResource("7_pw2")}, {
+"duration": 1.0,
+"texture": ExtResource("8_pw3")}, {
+"duration": 1.0,
+"texture": ExtResource("9_pw4")}, {
+"duration": 1.0,
+"texture": ExtResource("10_pw5")}, {
+"duration": 1.0,
+"texture": ExtResource("11_pw6")}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}, {
+"frames": [{"duration": 1.0,
+"texture": ExtResource("12_pj0")}, {
+"duration": 1.0,
+"texture": ExtResource("13_pj1")}],
+"loop": true,
+"name": &"jump",
+"speed": 8.0
+}, {
+"frames": [{"duration": 1.0,
+"texture": ExtResource("14_pslide")}],
+"loop": true,
+"name": &"slide",
+"speed": 5.0
+}]
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_player")
@@ -15,9 +70,8 @@ script = ExtResource("1_player")
 position = Vector2(0, -14)
 shape = SubResource("RectangleShape2D_body")
 
-[node name="Visual" type="ColorRect" parent="."]
-offset_left = -8.0
-offset_top = -28.0
-offset_right = 8.0
-offset_bottom = 0.0
-color = Color(0.22, 0.47, 0.85, 1)
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -31)
+sprite_frames = SubResource("SpriteFrames_player")
+animation = &"idle"
+autoplay = "idle"

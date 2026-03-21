@@ -1,19 +1,19 @@
 [gd_scene load_steps=4 format=3 uid="uid://broomwarp001"]
 
 [ext_resource type="Script" path="res://scenes/objects/RoomWarp.gd" id="1_roomwarp"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_room_warp.png" id="2_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_warp"]
-size = Vector2(16, 32)
+size = Vector2(32, 48)
 
 [node name="RoomWarp" type="Area2D"]
 script = ExtResource("1_roomwarp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -24)
 shape = SubResource("RectangleShape2D_warp")
 
-[node name="Visual" type="ColorRect" parent="."]
-offset_left = -8.0
-offset_top = -32.0
-offset_right = 8.0
-offset_bottom = 0.0
-color = Color(0.9, 0.8, 0.0, 0.6)
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -31)
+texture = ExtResource("2_tex")
+modulate = Color(1.0, 1.0, 1.0, 0.8)

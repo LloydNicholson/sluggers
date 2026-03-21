@@ -10,21 +10,19 @@ extends CharacterBody2D
 ## Block placement:
 ##   Z (create_solid)   – places a solid StaticBody2D platform
 ##   X (create_bouncy)  – places a bouncy Area2D that launches the player up
-##
-## All physics constants mirror the original GameMaker values so that the
-## game feel is preserved in the Godot rewrite.
 
-# ── Physics constants ──────────────────────────────────────────────────────
-const GRAVITY: float            = 0.8    # pixels per frame² (applied each physics tick)
-const MAX_FALL_SPEED: float     = 20.0
-const MAX_SPEED: float          = 10.0   # max horizontal speed (pixels/tick)
-const ACCELERATION: float       = 0.5    # ground horizontal acceleration
-const FRICTION_COEFF: float     = 0.2    # ground friction coefficient
-const WALL_FRICTION_COEFF: float = 0.08  # wall slide friction coefficient
-const JUMP_SPEED: float         = -20.0  # initial jump velocity (negative = up)
-const MIN_JUMP_SPEED: float     = -8.0   # velocity clamp if jump button released early
-const WALL_JUMP_H: float        = 8.0    # horizontal kick away from wall on wall-jump
-const WALL_JUMP_V: float        = -16.0  # vertical kick on wall-jump
+# ── Physics constants (all velocities in px/s, accelerations in px/s²) ────
+# Original GML values were in px/frame at 60 fps.  Multiply by 60 for px/s.
+const GRAVITY: float             = 2880.0   # 0.8 px/frame² × 60 × 60
+const MAX_FALL_SPEED: float      = 1200.0   # 20 px/frame × 60
+const MAX_SPEED: float           = 600.0    # 10 px/frame × 60
+const ACCELERATION: float        = 1800.0   # 0.5 px/frame² × 60 × 60 (used with delta)
+const FRICTION_COEFF: float      = 0.2      # proportional, applied per physics frame
+const WALL_FRICTION_COEFF: float = 0.08     # proportional, applied per physics frame
+const JUMP_SPEED: float          = -1200.0  # -20 px/frame × 60
+const MIN_JUMP_SPEED: float      = -480.0   # -8 px/frame × 60
+const WALL_JUMP_H: float         = 480.0    # 8 px/frame × 60
+const WALL_JUMP_V: float         = -960.0   # -16 px/frame × 60
 
 ## Horizontal offset from player centre when placing a block.
 const BLOCK_PLACE_OFFSET: float = 32.0
@@ -44,19 +42,22 @@ var _facing: int = 1
 @export var solid_creation_scene: PackedScene
 @export var bouncy_creation_scene: PackedScene
 
-@onready var _visual: ColorRect = $Visual
+@onready var _sprite: AnimatedSprite2D = $Sprite
 
 
 func _ready() -> void:
 	add_to_group("player")
+	if _sprite:
+		_sprite.play("idle")
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	_handle_meta_input()
-	_apply_gravity()
-	_handle_movement_input()
+	_apply_gravity(delta)
+	_handle_movement_input(delta)
 	_execute_movement()
 	_update_state()
+	_update_animation()
 
 
 # ── Input ──────────────────────────────────────────────────────────────────
@@ -69,19 +70,19 @@ func _handle_meta_input() -> void:
 		get_tree().reload_current_scene()
 
 
-func _handle_movement_input() -> void:
+func _handle_movement_input(delta: float) -> void:
 	var left  := Input.is_action_pressed("move_left")
 	var right := Input.is_action_pressed("move_right")
 	var jump  := Input.is_action_just_pressed("jump")
 
 	match _state:
 		State.GROUND:
-			_ground_move(left, right)
+			_ground_move(left, right, delta)
 			if jump:
 				_start_jump()
 
 		State.AIR:
-			_air_move(left, right)
+			_air_move(left, right, delta)
 			# Variable jump height: cut velocity if the jump button is released early.
 			if not Input.is_action_pressed("jump") and velocity.y < MIN_JUMP_SPEED:
 				velocity.y = MIN_JUMP_SPEED
@@ -108,21 +109,21 @@ func _handle_creation_input() -> void:
 
 # ── Movement helpers ───────────────────────────────────────────────────────
 
-func _ground_move(left: bool, right: bool) -> void:
+func _ground_move(left: bool, right: bool, delta: float) -> void:
 	if right and not left:
-		velocity.x = _accelerate_toward(velocity.x, MAX_SPEED, ACCELERATION)
+		velocity.x = _accelerate_toward(velocity.x, MAX_SPEED, ACCELERATION * delta)
 		_facing = 1
 	elif left and not right:
-		velocity.x = _accelerate_toward(velocity.x, -MAX_SPEED, ACCELERATION)
+		velocity.x = _accelerate_toward(velocity.x, -MAX_SPEED, ACCELERATION * delta)
 		_facing = -1
 	else:
 		velocity.x = _apply_friction(velocity.x, FRICTION_COEFF)
 	_update_facing_visual()
 
 
-func _air_move(left: bool, right: bool) -> void:
+func _air_move(left: bool, right: bool, delta: float) -> void:
 	# Air control is 1/4 of ground acceleration (matches original GML).
-	var air_accel := ACCELERATION * 0.25
+	var air_accel := ACCELERATION * 0.25 * delta
 	if right and not left:
 		velocity.x = _accelerate_toward(velocity.x, MAX_SPEED, air_accel)
 		_facing = 1
@@ -152,9 +153,9 @@ func _wall_jump() -> void:
 
 # ── Physics ────────────────────────────────────────────────────────────────
 
-func _apply_gravity() -> void:
+func _apply_gravity(delta: float) -> void:
 	if _state != State.GROUND:
-		velocity.y = minf(velocity.y + GRAVITY, MAX_FALL_SPEED)
+		velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
 
 
 func _execute_movement() -> void:
@@ -201,8 +202,23 @@ func _place_block(scene: PackedScene) -> void:
 # ── Visual helpers ─────────────────────────────────────────────────────────
 
 func _update_facing_visual() -> void:
-	if _visual:
-		_visual.scale.x = float(_facing)
+	if _sprite:
+		_sprite.flip_h = (_facing == -1)
+
+
+func _update_animation() -> void:
+	if not _sprite:
+		return
+	match _state:
+		State.GROUND:
+			if absf(velocity.x) > 10.0:
+				_sprite.play("walk")
+			else:
+				_sprite.play("idle")
+		State.AIR:
+			_sprite.play("jump")
+		State.WALL:
+			_sprite.play("slide")
 
 
 # ── Pure utility functions (mirrors of GML script equivalents) ─────────────

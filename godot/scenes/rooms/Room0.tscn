@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://broom0001"]
+[gd_scene load_steps=25 format=3 uid="uid://broom0001"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/objects/Diamond.tscn" id="2_diamond"]
@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" path="res://scenes/camera/GameCamera.tscn" id="9_camera"]
 [ext_resource type="PackedScene" path="res://scenes/objects/SolidCreation.tscn" id="10_solidcr"]
 [ext_resource type="PackedScene" path="res://scenes/objects/BouncyCreation.tscn" id="11_bouncycr"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_bg_sky.png" id="12_bgsky"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_bg_clouds_behind.png" id="13_clouds_behind"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_bg_clouds_front.png" id="14_clouds_front"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
 size = Vector2(384, 16)
@@ -37,11 +40,26 @@ size = Vector2(384, 16)
 [node name="Room0" type="Node2D"]
 
 ; ── Sky background ─────────────────────────────────────────────────────────
-[node name="Background" type="ColorRect" parent="."]
-position = Vector2(0, 0)
-size = Vector2(384, 216)
-color = Color(0.25, 0.53, 0.87, 1)
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(192, 108)
+texture = ExtResource("12_bgsky")
+region_enabled = true
+region_rect = Rect2(0, 0, 384, 216)
 z_index = -10
+
+[node name="CloudsBehind" type="Sprite2D" parent="."]
+position = Vector2(192, 108)
+texture = ExtResource("13_clouds_behind")
+region_enabled = true
+region_rect = Rect2(0, 0, 384, 216)
+z_index = -9
+
+[node name="CloudsFront" type="Sprite2D" parent="."]
+position = Vector2(192, 108)
+texture = ExtResource("14_clouds_front")
+region_enabled = true
+region_rect = Rect2(0, 0, 384, 216)
+z_index = -8
 
 ; ── Terrain ────────────────────────────────────────────────────────────────
 [node name="Terrain" type="Node2D" parent="."]
@@ -143,7 +161,7 @@ position = Vector2(192, 80)
 position = Vector2(80, 168)
 x_min = 32.0
 x_max = 160.0
-speed = 60.0
+speed = 200.0
 
 ; ── Enemy ──────────────────────────────────────────────────────────────────
 [node name="Enemy1" parent="." instance=ExtResource("6_enemy")]

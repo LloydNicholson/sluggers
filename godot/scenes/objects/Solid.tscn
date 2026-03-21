@@ -1,16 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://bsolid001"]
+[gd_scene load_steps=4 format=3 uid="uid://bsolid001"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/s_solid.png" id="1_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_solid"]
-size = Vector2(32, 32)
+size = Vector2(64, 64)
 
 [node name="Solid" type="StaticBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_solid")
 
-[node name="Visual" type="ColorRect" parent="."]
-offset_left = -16.0
-offset_top = -16.0
-offset_right = 16.0
-offset_bottom = 16.0
-color = Color(0.4, 0.28, 0.18, 1)
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(32, 32)
+centered = false
+texture = ExtResource("1_tex")

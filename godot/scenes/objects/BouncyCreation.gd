@@ -6,7 +6,7 @@ extends Area2D
 ## body is launched upward with BOUNCE_FORCE, replicating the GML bounce object.
 ## Added to the "player_created" group so level-reset logic can remove it.
 
-const BOUNCE_FORCE: float = -25.0
+const BOUNCE_FORCE: float = -1500.0
 
 func _ready() -> void:
 	add_to_group("player_created")

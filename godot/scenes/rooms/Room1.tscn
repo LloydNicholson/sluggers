@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://broom1001"]
+[gd_scene load_steps=21 format=3 uid="uid://broom1001"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/objects/Diamond.tscn" id="2_diamond"]
@@ -11,6 +11,9 @@
 [ext_resource type="PackedScene" path="res://scenes/camera/GameCamera.tscn" id="9_camera"]
 [ext_resource type="PackedScene" path="res://scenes/objects/SolidCreation.tscn" id="10_solidcr"]
 [ext_resource type="PackedScene" path="res://scenes/objects/BouncyCreation.tscn" id="11_bouncycr"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_bg_sky.png" id="12_bgsky"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_mg_city.png" id="13_mgcity"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_mg_silhoette.png" id="14_mgsilhouette"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
 size = Vector2(384, 16)
@@ -34,11 +37,26 @@ size = Vector2(16, 216)
 [node name="Room1" type="Node2D"]
 
 ; ── Sky background ─────────────────────────────────────────────────────────
-[node name="Background" type="ColorRect" parent="."]
-position = Vector2(0, 0)
-size = Vector2(384, 216)
-color = Color(0.15, 0.35, 0.6, 1)
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(192, 108)
+texture = ExtResource("12_bgsky")
+region_enabled = true
+region_rect = Rect2(0, 0, 384, 216)
 z_index = -10
+
+[node name="MidgroundCity" type="Sprite2D" parent="."]
+position = Vector2(192, 108)
+texture = ExtResource("13_mgcity")
+region_enabled = true
+region_rect = Rect2(0, 0, 384, 216)
+z_index = -9
+
+[node name="MidgroundSilhouette" type="Sprite2D" parent="."]
+position = Vector2(192, 108)
+texture = ExtResource("14_mgsilhouette")
+region_enabled = true
+region_rect = Rect2(0, 0, 384, 216)
+z_index = -8
 
 ; ── Terrain ────────────────────────────────────────────────────────────────
 [node name="Terrain" type="Node2D" parent="."]
@@ -144,13 +162,13 @@ position = Vector2(192, 48)
 position = Vector2(128, 148)
 x_min = 40.0
 x_max = 200.0
-speed = 80.0
+speed = 200.0
 
 [node name="MovingBlock2" parent="." instance=ExtResource("3_movingb")]
 position = Vector2(280, 112)
 x_min = 200.0
 x_max = 360.0
-speed = 100.0
+speed = 250.0
 
 ; ── Enemies ────────────────────────────────────────────────────────────────
 [node name="Enemy1" parent="." instance=ExtResource("6_enemy")]
