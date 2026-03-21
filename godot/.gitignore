@@ -1,0 +1,14 @@
+# Godot 4 editor and cache directories
+.godot/
+
+# Export templates and builds
+*.exe
+*.x86_64
+*.x86_32
+*.arm64
+*.app
+*.apk
+*.aab
+*.html
+*.pck
+*.zip

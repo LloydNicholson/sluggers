@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhud001"]
+
+[ext_resource type="Script" path="res://scenes/ui/HUD.gd" id="1_hud"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_hud")
+
+[node name="Panel" type="PanelContainer" parent="."]
+offset_right = 120.0
+offset_bottom = 56.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+
+[node name="TimerLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "00:00"
+theme_override_font_sizes/font_size = 10
+
+[node name="DiamondLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Diamonds: 0"
+theme_override_font_sizes/font_size = 10
+
+[node name="CreationLabel" type="Label" parent="Panel/VBox"]
+layout_mode = 2
+text = "Creations: 5"
+theme_override_font_sizes/font_size = 10
