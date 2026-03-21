@@ -2,8 +2,8 @@ extends Area2D
 
 ## Sluggers – DeathArea
 ##
-## An invisible kill zone (e.g. a pit or spike). Reloads the current scene
-## when the player enters, effectively restarting the level.
+## An invisible kill zone (e.g. a pit or spike). Instantly kills the
+## player on contact, using the player death/respawn flow when available.
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)

@@ -36,7 +36,7 @@ godot/
 │   │   ├── BouncyCreation.*    # Player-placed bouncy block (X key)
 │   │   ├── Diamond.*           # Collectible gem
 │   │   ├── MovingBlock.*       # Horizontally-shuttling platform
-│   │   ├── Enemy.*             # Hazard that restarts the level on contact
+│   │   ├── Enemy.*             # Damages/knocks back player; can be stomped
 │   │   ├── DeathArea.*         # Kill-zone (pits, spikes)
 │   │   └── RoomWarp.*          # Teleport trigger between rooms
 │   ├── ui/
@@ -46,7 +46,10 @@ godot/
 │   │   └── GameCamera.*        # Lerp-follow camera
 │   └── rooms/
 │       ├── Room0.tscn          # Level 1
-│       └── Room1.tscn          # Level 2
+│       ├── Room1.tscn          # Level 2
+│       ├── Room2.tscn          # Level 3
+│       ├── Room3.tscn          # Level 4
+│       └── Room4.tscn          # Level 5
 └── assets/
     └── README.md               # Sprite / audio asset list (to be imported)
 ```

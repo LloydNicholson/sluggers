@@ -30,8 +30,10 @@ var _rebinding_action: String = ""
 
 
 func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
 	GameState.paused.connect(_show_menu)
 	GameState.resumed.connect(_hide_menu)
+	_connect_ui_signals()
 	hide()
 
 
@@ -103,20 +105,17 @@ func _on_back_pressed() -> void:
 
 func _on_master_volume_changed(value: float) -> void:
 	GameState.master_volume = value
-	AudioServer.set_bus_volume_db(
-		AudioServer.get_bus_index("Master"), linear_to_db(value))
+	_set_bus_volume("Master", value)
 
 
 func _on_music_volume_changed(value: float) -> void:
 	GameState.music_volume = value
-	AudioServer.set_bus_volume_db(
-		AudioServer.get_bus_index("Music"), linear_to_db(value))
+	_set_bus_volume("Music", value)
 
 
 func _on_sound_volume_changed(value: float) -> void:
 	GameState.sound_volume = value
-	AudioServer.set_bus_volume_db(
-		AudioServer.get_bus_index("Sounds"), linear_to_db(value))
+	_set_bus_volume("Sounds", value)
 
 
 # ── DIFFICULTY PAGE signals ────────────────────────────────────────────────
@@ -170,3 +169,41 @@ func _input(event: InputEvent) -> void:
 		_rebinding_action = ""
 		_refresh_controls_page()
 		get_viewport().set_input_as_handled()
+
+
+func _connect_ui_signals() -> void:
+	$Menu/MainPage/ResumeButton.pressed.connect(_on_resume_pressed)
+	$Menu/MainPage/SettingsButton.pressed.connect(_on_settings_pressed)
+	$Menu/MainPage/QuitButton.pressed.connect(_on_quit_pressed)
+
+	$Menu/SettingsPage/AudioButton.pressed.connect(_on_audio_pressed)
+	$Menu/SettingsPage/DifficultyButton.pressed.connect(_on_difficulty_pressed)
+	$Menu/SettingsPage/GraphicsButton.pressed.connect(_on_graphics_pressed)
+	$Menu/SettingsPage/ControlsButton.pressed.connect(_on_controls_pressed)
+	$Menu/SettingsPage/BackButton_Settings.pressed.connect(_on_back_pressed)
+
+	$Menu/AudioPage/MasterSlider.value_changed.connect(_on_master_volume_changed)
+	$Menu/AudioPage/MusicSlider.value_changed.connect(_on_music_volume_changed)
+	$Menu/AudioPage/SoundSlider.value_changed.connect(_on_sound_volume_changed)
+	$Menu/AudioPage/BackButton_Audio.pressed.connect(_on_back_pressed)
+
+	$Menu/DifficultyPage/DifficultyOption.item_selected.connect(_on_difficulty_option_selected)
+	$Menu/DifficultyPage/BackButton_Difficulty.pressed.connect(_on_back_pressed)
+
+	$Menu/GraphicsPage/FullscreenCheck.toggled.connect(_on_fullscreen_toggled)
+	$Menu/GraphicsPage/ResolutionOption.item_selected.connect(_on_resolution_selected)
+	$Menu/GraphicsPage/BackButton_Graphics.pressed.connect(_on_back_pressed)
+
+	$Menu/ControlsPage/BackButton_Controls.pressed.connect(_on_back_pressed)
+	for child in _controls_page.get_children():
+		if child is Button and child.has_meta("_action"):
+			var action: String = child.get_meta("_action")
+			child.pressed.connect(_on_rebind_button_pressed.bind(action))
+
+
+func _set_bus_volume(primary_bus: String, value: float) -> void:
+	var bus_index: int = AudioServer.get_bus_index(primary_bus)
+	if bus_index == -1:
+		bus_index = AudioServer.get_bus_index("Master")
+	if bus_index != -1:
+		AudioServer.set_bus_volume_db(bus_index, linear_to_db(value))
