@@ -5,6 +5,8 @@ extends Camera2D
 ## Smoothly follows a target node using linear interpolation, preserving the
 ## same feel as the original GML camera that lerped at 0.1 per frame.
 ## The target is normally the Player node in the current room.
+## Camera2D limit_* properties are respected: the lerp destination is clamped
+## so the view never drifts outside the room boundaries.
 
 ## NodePath to the node this camera should follow (set per-room in the editor).
 @export var target_path: NodePath = NodePath("")
@@ -22,4 +24,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if _target == null:
 		return
-	global_position = global_position.lerp(_target.global_position, lerp_speed)
+	var half := get_viewport_rect().size * 0.5
+	var tx := clampf(_target.global_position.x, limit_left + half.x, limit_right - half.x)
+	var ty := clampf(_target.global_position.y, limit_top + half.y, limit_bottom - half.y)
+	global_position = global_position.lerp(Vector2(tx, ty), lerp_speed)
