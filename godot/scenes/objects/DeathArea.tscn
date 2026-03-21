@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scenes/objects/DeathArea.gd" id="1_deatha"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_deatha"]
-size = Vector2(384, 16)
+size = Vector2(2000, 16)
 
 [node name="DeathArea" type="Area2D"]
 script = ExtResource("1_deatha")
