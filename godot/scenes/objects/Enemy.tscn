@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://benemy001"]
+
+[ext_resource type="Script" path="res://scenes/objects/Enemy.gd" id="1_enemy"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_enemy_0.png" id="2_e0"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_enemy_1.png" id="3_e1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enemy"]
+size = Vector2(20, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_enemy"]
+animations = [{
+"frames": [{"duration": 1.0,
+"texture": ExtResource("2_e0")}, {
+"duration": 1.0,
+"texture": ExtResource("3_e1")}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[node name="Enemy" type="Area2D"]
+script = ExtResource("1_enemy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_enemy")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -31)
+sprite_frames = SubResource("SpriteFrames_enemy")
+animation = &"default"
+autoplay = "default"
+
+[node name="HealthLabel" type="Label" parent="."]
+offset_left = -16.0
+offset_top = -64.0
+offset_right = 16.0
+offset_bottom = -54.0
+horizontal_alignment = 1
+text = "♥"
+theme_override_font_sizes/font_size = 8

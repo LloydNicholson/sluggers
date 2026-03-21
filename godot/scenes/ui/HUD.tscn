@@ -1,0 +1,56 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhud001"]
+
+[ext_resource type="Script" path="res://scenes/ui/HUD.gd" id="1_hud"]
+
+[node name="HUD" type="CanvasLayer"]
+layer = 10
+script = ExtResource("1_hud")
+
+[node name="StatsPanel" type="PanelContainer" parent="."]
+offset_right = 190.0
+offset_bottom = 82.0
+
+[node name="VBox" type="VBoxContainer" parent="StatsPanel"]
+layout_mode = 2
+
+[node name="LevelLabel" type="Label" parent="StatsPanel/VBox"]
+layout_mode = 2
+text = ""
+theme_override_font_sizes/font_size = 10
+
+[node name="HealthLabel" type="Label" parent="StatsPanel/VBox"]
+layout_mode = 2
+text = "♥♥♥♥"
+theme_override_font_sizes/font_size = 10
+
+[node name="TimerLabel" type="Label" parent="StatsPanel/VBox"]
+layout_mode = 2
+text = "00:00"
+theme_override_font_sizes/font_size = 10
+
+[node name="DiamondLabel" type="Label" parent="StatsPanel/VBox"]
+layout_mode = 2
+text = "Diamonds: 0"
+theme_override_font_sizes/font_size = 10
+
+[node name="CreationLabel" type="Label" parent="StatsPanel/VBox"]
+layout_mode = 2
+text = "Creations: 5"
+theme_override_font_sizes/font_size = 10
+
+[node name="RespawnOverlay" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.7)
+visible = false
+
+[node name="RespawnLabel" type="Label" parent="RespawnOverlay"]
+anchor_left = 0.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -10.0
+offset_bottom = 10.0
+horizontal_alignment = 1
+text = "Respawning..."
+theme_override_font_sizes/font_size = 16

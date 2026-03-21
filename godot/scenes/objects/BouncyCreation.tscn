@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://bbouncycr001"]
+
+[ext_resource type="Script" path="res://scenes/objects/BouncyCreation.gd" id="1_bouncycr"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_creation_block.png" id="2_tex"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bouncy"]
+size = Vector2(32, 32)
+
+[node name="BouncyCreation" type="Area2D"]
+script = ExtResource("1_bouncycr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_bouncy")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_tex")
+modulate = Color(1.0, 0.3, 0.1, 1)
