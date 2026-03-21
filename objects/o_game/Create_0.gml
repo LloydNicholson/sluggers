@@ -19,6 +19,10 @@ global.diamonds = 0;
 global.player_start_position = i_game_start;
 global.player_score = 0;
 global.creations_allowed = 0;
+global.diamond_combo = 0;
+global.diamond_combo_timer = 0;
+global.diamond_combo_window_seconds = 2;
+global.diamond_combo_score_multiplier = 10;
 
 instance_create_layer(x, y, "Instances", o_input);
 instance_create_layer(x, y, "Instances", o_menu);

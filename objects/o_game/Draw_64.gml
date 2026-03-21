@@ -6,9 +6,10 @@ draw_set_valign(fa_bottom);
 var g_width = camera.view_w, g_height = camera.view_h;
 
 #region Health display (top-left)
-if instance_exists(o_player) {
-	var _hp = o_player.health_;
-	var _max_hp = o_player.max_health_;
+var _player = instance_find(o_player, 0);
+if instance_exists(_player) {
+	var _hp = _player.health_;
+	var _max_hp = _player.max_health_;
 	var _heart_w = 18;
 	var _heart_h = 14;
 	var _heart_gap = 4;
@@ -24,7 +25,7 @@ if instance_exists(o_player) {
 
 		// Fill (red = full, dark = empty)
 		if i < _hp {
-			if o_player.invincible_ > 0 && o_player.invincible_ mod 6 < 3 {
+			if _player.invincible_ > 0 && _player.invincible_ mod 6 < 3 {
 				draw_set_color(c_red);
 			} else {
 				draw_set_color(make_color_rgb(220, 50, 50));
@@ -41,7 +42,7 @@ if instance_exists(o_player) {
 	draw_set_color(c_white);
 
 	// "DEAD" overlay text
-	if o_player.dead_ {
+	if _player.dead_ {
 		draw_set_halign(fa_center);
 		draw_set_valign(fa_middle);
 		draw_set_color(c_red);
@@ -73,6 +74,16 @@ draw_set_color(c_black);
 draw_text(_dx + 22, _dy + 1, _diamond_string);
 draw_set_color(c_white);
 draw_text(_dx + 22, _dy, _diamond_string);
+
+if global.diamond_combo > 1 && global.diamond_combo_timer > 0 {
+	draw_set_halign(fa_right);
+	draw_set_color(c_black);
+	draw_text(g_width - 10, g_height - 26, "x" + string(global.diamond_combo) + " COMBO!");
+	draw_set_color(make_color_rgb(255, 230, 90));
+	draw_text(g_width - 11, g_height - 27, "x" + string(global.diamond_combo) + " COMBO!");
+	draw_set_color(c_white);
+	draw_set_halign(fa_left);
+}
 #endregion
 
 #region Level name (top-right)
