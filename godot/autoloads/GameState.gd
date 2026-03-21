@@ -12,6 +12,9 @@ signal resumed
 signal diamonds_changed(count: int)
 signal creations_changed(remaining: int)
 signal timer_updated(minutes: int, seconds: int)
+signal health_changed(current: int, maximum: int)
+signal player_died
+signal player_respawned
 
 # ── Pause ──────────────────────────────────────────────────────────────────
 var is_paused: bool = false
@@ -33,8 +36,11 @@ var creations_remaining: int = 5:
 		creations_remaining = value
 		creations_changed.emit(creations_remaining)
 
-# ── Stamina ────────────────────────────────────────────────────────────────
-var player_stamina: int = 4
+# ── Stamina / health ───────────────────────────────────────────────────────
+var player_stamina: int = 4:
+	set(value):
+		player_stamina = clampi(value, 0, max_player_stamina)
+		health_changed.emit(player_stamina, max_player_stamina)
 var max_player_stamina: int = 4
 
 # ── Difficulty (0 = Easy, 1 = Medium, 2 = Extreme) ────────────────────────

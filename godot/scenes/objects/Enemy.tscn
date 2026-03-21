@@ -30,3 +30,12 @@ position = Vector2(0, -31)
 sprite_frames = SubResource("SpriteFrames_enemy")
 animation = &"default"
 autoplay = "default"
+
+[node name="HealthLabel" type="Label" parent="."]
+offset_left = -16.0
+offset_top = -64.0
+offset_right = 16.0
+offset_bottom = -54.0
+horizontal_alignment = 1
+text = "♥"
+theme_override_font_sizes/font_size = 8
