@@ -204,6 +204,6 @@ func _connect_ui_signals() -> void:
 func _set_bus_volume(primary_bus: String, value: float) -> void:
 	var bus_index: int = AudioServer.get_bus_index(primary_bus)
 	if bus_index == -1:
-		bus_index = AudioServer.get_bus_index("Master")
-	if bus_index != -1:
-		AudioServer.set_bus_volume_db(bus_index, linear_to_db(value))
+		push_warning("Audio bus '%s' not found; skipping volume change." % primary_bus)
+		return
+	AudioServer.set_bus_volume_db(bus_index, linear_to_db(value))
