@@ -14,3 +14,9 @@ if keyboard_check_pressed(ord("R")) {
 	game_restart();
 }
 
+if global.diamond_combo_timer > 0 {
+	global.diamond_combo_timer--;
+	if global.diamond_combo_timer <= 0 {
+		global.diamond_combo = 0;
+	}
+}
