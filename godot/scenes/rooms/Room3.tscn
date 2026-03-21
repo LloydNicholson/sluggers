@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://broom1001"]
+[gd_scene load_steps=27 format=3 uid="uid://broom3001"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/objects/Diamond.tscn" id="2_diamond"]
@@ -12,29 +12,11 @@
 [ext_resource type="PackedScene" path="res://scenes/objects/SolidCreation.tscn" id="10_solidcr"]
 [ext_resource type="PackedScene" path="res://scenes/objects/BouncyCreation.tscn" id="11_bouncycr"]
 [ext_resource type="Texture2D" path="res://assets/sprites/s_bg_sky.png" id="12_bgsky"]
-[ext_resource type="Texture2D" path="res://assets/sprites/s_mg_city.png" id="13_mgcity"]
-[ext_resource type="Texture2D" path="res://assets/sprites/s_mg_silhoette.png" id="14_mgsilhouette"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_bg_clouds_behind.png" id="13_clouds_behind"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_bg_clouds_front.png" id="14_clouds_front"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
 size = Vector2(768, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat1"]
-size = Vector2(64, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat2"]
-size = Vector2(64, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat3"]
-size = Vector2(96, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat4"]
-size = Vector2(64, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat5"]
-size = Vector2(64, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat6"]
-size = Vector2(64, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wallL"]
 size = Vector2(16, 216)
@@ -42,10 +24,28 @@ size = Vector2(16, 216)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wallR"]
 size = Vector2(16, 216)
 
-; ── Root ──────────────────────────────────────────────────────────────────
-[node name="Room1" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat1"]
+size = Vector2(48, 16)
 
-; ── Sky background ─────────────────────────────────────────────────────────
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat2"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat3"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat4"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat5"]
+size = Vector2(48, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat6"]
+size = Vector2(48, 16)
+
+; ── Root ──────────────────────────────────────────────────────────────────
+[node name="Room3" type="Node2D"]
+
+; ── Background ─────────────────────────────────────────────────────────────
 [node name="Background" type="Sprite2D" parent="."]
 position = Vector2(384, 108)
 texture = ExtResource("12_bgsky")
@@ -53,16 +53,16 @@ region_enabled = true
 region_rect = Rect2(0, 0, 768, 216)
 z_index = -10
 
-[node name="MidgroundCity" type="Sprite2D" parent="."]
+[node name="CloudsBehind" type="Sprite2D" parent="."]
 position = Vector2(384, 108)
-texture = ExtResource("13_mgcity")
+texture = ExtResource("13_clouds_behind")
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 216)
 z_index = -9
 
-[node name="MidgroundSilhouette" type="Sprite2D" parent="."]
+[node name="CloudsFront" type="Sprite2D" parent="."]
 position = Vector2(384, 108)
-texture = ExtResource("14_mgsilhouette")
+texture = ExtResource("14_clouds_front")
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 216)
 z_index = -8
@@ -81,7 +81,7 @@ offset_left = -384.0
 offset_top = -8.0
 offset_right = 384.0
 offset_bottom = 8.0
-color = Color(0.3, 0.2, 0.1, 1)
+color = Color(0.2, 0.3, 0.2, 1)
 
 [node name="WallLeft" type="StaticBody2D" parent="Terrain"]
 position = Vector2(8, 108)
@@ -94,7 +94,7 @@ offset_left = -8.0
 offset_top = -108.0
 offset_right = 8.0
 offset_bottom = 108.0
-color = Color(0.3, 0.2, 0.1, 1)
+color = Color(0.2, 0.3, 0.2, 1)
 
 [node name="WallRight" type="StaticBody2D" parent="Terrain"]
 position = Vector2(760, 108)
@@ -107,86 +107,86 @@ offset_left = -8.0
 offset_top = -108.0
 offset_right = 8.0
 offset_bottom = 108.0
-color = Color(0.3, 0.2, 0.1, 1)
+color = Color(0.2, 0.3, 0.2, 1)
 
-; Staggered platforms – harder layout than Room 0
+; Alternating-height layout designed to require wall jumps
 [node name="Platform1" type="StaticBody2D" parent="Terrain"]
-position = Vector2(80, 176)
+position = Vector2(80, 168)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform1"]
 shape = SubResource("RectangleShape2D_plat1")
 
 [node name="Visual" type="ColorRect" parent="Terrain/Platform1"]
-offset_left = -32.0
+offset_left = -24.0
 offset_top = -8.0
-offset_right = 32.0
+offset_right = 24.0
 offset_bottom = 8.0
-color = Color(0.3, 0.2, 0.1, 1)
+color = Color(0.2, 0.3, 0.2, 1)
 
 [node name="Platform2" type="StaticBody2D" parent="Terrain"]
-position = Vector2(256, 148)
+position = Vector2(192, 128)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform2"]
 shape = SubResource("RectangleShape2D_plat2")
 
 [node name="Visual" type="ColorRect" parent="Terrain/Platform2"]
-offset_left = -32.0
+offset_left = -24.0
 offset_top = -8.0
-offset_right = 32.0
+offset_right = 24.0
 offset_bottom = 8.0
-color = Color(0.3, 0.2, 0.1, 1)
+color = Color(0.2, 0.3, 0.2, 1)
 
 [node name="Platform3" type="StaticBody2D" parent="Terrain"]
-position = Vector2(400, 112)
+position = Vector2(304, 88)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform3"]
 shape = SubResource("RectangleShape2D_plat3")
 
 [node name="Visual" type="ColorRect" parent="Terrain/Platform3"]
-offset_left = -48.0
+offset_left = -24.0
 offset_top = -8.0
-offset_right = 48.0
+offset_right = 24.0
 offset_bottom = 8.0
-color = Color(0.3, 0.2, 0.1, 1)
+color = Color(0.2, 0.3, 0.2, 1)
 
 [node name="Platform4" type="StaticBody2D" parent="Terrain"]
-position = Vector2(512, 176)
+position = Vector2(464, 128)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform4"]
 shape = SubResource("RectangleShape2D_plat4")
 
 [node name="Visual" type="ColorRect" parent="Terrain/Platform4"]
-offset_left = -32.0
+offset_left = -24.0
 offset_top = -8.0
-offset_right = 32.0
+offset_right = 24.0
 offset_bottom = 8.0
-color = Color(0.3, 0.2, 0.1, 1)
+color = Color(0.2, 0.3, 0.2, 1)
 
 [node name="Platform5" type="StaticBody2D" parent="Terrain"]
-position = Vector2(640, 148)
+position = Vector2(576, 88)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform5"]
 shape = SubResource("RectangleShape2D_plat5")
 
 [node name="Visual" type="ColorRect" parent="Terrain/Platform5"]
-offset_left = -32.0
+offset_left = -24.0
 offset_top = -8.0
-offset_right = 32.0
+offset_right = 24.0
 offset_bottom = 8.0
-color = Color(0.3, 0.2, 0.1, 1)
+color = Color(0.2, 0.3, 0.2, 1)
 
 [node name="Platform6" type="StaticBody2D" parent="Terrain"]
-position = Vector2(700, 112)
+position = Vector2(688, 52)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform6"]
 shape = SubResource("RectangleShape2D_plat6")
 
 [node name="Visual" type="ColorRect" parent="Terrain/Platform6"]
-offset_left = -32.0
+offset_left = -24.0
 offset_top = -8.0
-offset_right = 32.0
+offset_right = 24.0
 offset_bottom = 8.0
-color = Color(0.3, 0.2, 0.1, 1)
+color = Color(0.2, 0.3, 0.2, 1)
 
 ; ── Death pit ──────────────────────────────────────────────────────────────
 [node name="DeathPit" parent="." instance=ExtResource("4_deatha")]
@@ -194,67 +194,75 @@ position = Vector2(384, 224)
 
 ; ── Collectibles ───────────────────────────────────────────────────────────
 [node name="Diamond1" parent="." instance=ExtResource("2_diamond")]
-position = Vector2(80, 160)
+position = Vector2(80, 152)
 
 [node name="Diamond2" parent="." instance=ExtResource("2_diamond")]
-position = Vector2(256, 132)
+position = Vector2(192, 112)
 
 [node name="Diamond3" parent="." instance=ExtResource("2_diamond")]
-position = Vector2(400, 96)
+position = Vector2(304, 72)
 
 [node name="Diamond4" parent="." instance=ExtResource("2_diamond")]
-position = Vector2(192, 48)
+position = Vector2(464, 112)
 
 [node name="Diamond5" parent="." instance=ExtResource("2_diamond")]
-position = Vector2(512, 160)
+position = Vector2(576, 72)
 
 [node name="Diamond6" parent="." instance=ExtResource("2_diamond")]
-position = Vector2(640, 132)
+position = Vector2(688, 36)
 
 ; ── Moving platforms ───────────────────────────────────────────────────────
 [node name="MovingBlock1" parent="." instance=ExtResource("3_movingb")]
-position = Vector2(128, 148)
-x_min = 40.0
+position = Vector2(128, 128)
+x_min = 60.0
 x_max = 200.0
-speed = 200.0
+speed = 250.0
 
 [node name="MovingBlock2" parent="." instance=ExtResource("3_movingb")]
-position = Vector2(320, 112)
-x_min = 240.0
-x_max = 400.0
-speed = 250.0
-
-[node name="MovingBlock3" parent="." instance=ExtResource("3_movingb")]
-position = Vector2(550, 148)
-x_min = 440.0
-x_max = 640.0
-speed = 250.0
+position = Vector2(384, 88)
+x_min = 280.0
+x_max = 460.0
+speed = 260.0
 
 ; ── Enemies ────────────────────────────────────────────────────────────────
 [node name="Enemy1" parent="." instance=ExtResource("6_enemy")]
-position = Vector2(160, 200)
-x_min = 80.0
-x_max = 256.0
+position = Vector2(240, 200)
+x_min = 160.0
+x_max = 340.0
+chase_speed = 140.0
+detect_range = 200.0
 
 [node name="Enemy2" parent="." instance=ExtResource("6_enemy")]
-position = Vector2(400, 200)
-x_min = 320.0
-x_max = 480.0
+position = Vector2(480, 200)
+x_min = 380.0
+x_max = 580.0
+chase_speed = 140.0
+detect_range = 200.0
+max_health = 2
 
 [node name="Enemy3" parent="." instance=ExtResource("6_enemy")]
-position = Vector2(650, 200)
-x_min = 560.0
+position = Vector2(680, 200)
+x_min = 600.0
 x_max = 740.0
+chase_speed = 150.0
+detect_range = 180.0
+max_health = 2
 
-; ── Room warp back to Room 0 ───────────────────────────────────────────────
+[node name="Enemy4" parent="." instance=ExtResource("6_enemy")]
+position = Vector2(120, 200)
+x_min = 40.0
+x_max = 200.0
+chase_speed = 130.0
+detect_range = 160.0
+
+; ── Warps ──────────────────────────────────────────────────────────────────
 [node name="RoomWarpBack" parent="." instance=ExtResource("5_warp")]
 position = Vector2(20, 192)
-target_scene = "res://scenes/rooms/Room0.tscn"
+target_scene = "res://scenes/rooms/Room2.tscn"
 
-; ── Room warp forward to Room 2 ────────────────────────────────────────────
 [node name="RoomWarpForward" parent="." instance=ExtResource("5_warp")]
 position = Vector2(752, 192)
-target_scene = "res://scenes/rooms/Room2.tscn"
+target_scene = "res://scenes/rooms/Room4.tscn"
 
 ; ── Player ─────────────────────────────────────────────────────────────────
 [node name="Player" parent="." instance=ExtResource("1_player")]
