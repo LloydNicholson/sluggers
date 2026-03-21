@@ -4,7 +4,7 @@ extends Area2D
 ##
 ## A player-placed bouncy platform. When a CharacterBody2D lands on it the
 ## body is launched upward with BOUNCE_FORCE, replicating the GML bounce object.
-## Added to the "player_created" group so level-reset logic can remove it.
+## Added to the "player_created" group for centralized cleanup on level reset.
 
 const BOUNCE_FORCE: float = -1500.0
 

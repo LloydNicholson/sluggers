@@ -27,4 +27,5 @@ This directory is reserved for Sluggers' game assets in the Godot rewrite.
 - `s_bg` / `s_bg_sky` / `s_bg_clouds_behind` / `s_bg_clouds_front` – parallax layers
 - `s_fg` / `s_mg` / `s_mg_city` / `s_mg_silhoette` – foreground / midground layers
 
-Until sprites are imported, all scenes use `ColorRect` placeholder visuals.
+Some scenes may still use simple `ColorRect` placeholder visuals where sprites
+have not yet been imported or wired up.
