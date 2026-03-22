@@ -91,11 +91,10 @@ var _gun_sprite: Sprite2D = null
 
 
 func _ready() -> void:
-	add_to_group("players")
+	add_to_group("player")
 	_spawn_position = position
-	_health = GameState.player_stamina if GameState.player_stamina > 0 \
-		else GameState.max_player_stamina
-	GameState.player_stamina = _health
+	_health = GameState.max_player_stamina
+	_sync_health_to_gamestate()
 	floor_snap_length = 6.0
 	if _sprite:
 		_sprite.play("idle")
@@ -412,7 +411,7 @@ func take_damage(amount: int, knockback_dir: int) -> void:
 	if _iframes_timer > 0.0 or _state == State.DEAD or _state == State.BUBBLED:
 		return
 	_health -= amount
-	GameState.player_stamina = _health
+	_sync_health_to_gamestate()
 	if _health <= 0:
 		_die()
 		return
@@ -427,7 +426,7 @@ func instant_kill() -> void:
 	if _state == State.DEAD:
 		return
 	_health = 0
-	GameState.player_stamina = 0
+	_sync_health_to_gamestate()
 	_die()
 
 
@@ -441,12 +440,15 @@ func _die() -> void:
 	_state = State.DEAD
 	velocity = Vector2.ZERO
 	_respawn_timer = DEATH_RESPAWN_DELAY
-	GameState.player_died.emit()
+	if controller_device == 0:
+		GameState.player1_died.emit()
+	else:
+		GameState.player2_died.emit()
 
 
 func _respawn() -> void:
 	_health = GameState.max_player_stamina
-	GameState.player_stamina = _health
+	_sync_health_to_gamestate()
 	position = _spawn_position
 	velocity = Vector2.ZERO
 	_state = State.AIR
@@ -454,7 +456,18 @@ func _respawn() -> void:
 	if _sprite:
 		_sprite.modulate = Color.WHITE
 		_sprite.play("idle")
-	GameState.player_respawned.emit()
+	if controller_device == 0:
+		GameState.player1_respawned.emit()
+	else:
+		GameState.player2_respawned.emit()
+
+
+func _sync_health_to_gamestate() -> void:
+	"""Push this player's current health to the correct GameState slot."""
+	if controller_device == 0:
+		GameState.player1_stamina = _health
+	else:
+		GameState.player2_stamina = _health
 
 
 # ── Block placement ────────────────────────────────────────────────────────

@@ -12,9 +12,12 @@ signal resumed
 signal diamonds_changed(count: int)
 signal creations_changed(remaining: int)
 signal timer_updated(minutes: int, seconds: int)
-signal health_changed(current: int, maximum: int)
-signal player_died
-signal player_respawned
+signal health_changed_player1(current: int, maximum: int)
+signal health_changed_player2(current: int, maximum: int)
+signal player1_died
+signal player1_respawned
+signal player2_died
+signal player2_respawned
 
 # ── Pause ──────────────────────────────────────────────────────────────────
 var is_paused: bool = false
@@ -28,21 +31,25 @@ var _last_timer_second: int = -1
 # ── Collectibles ───────────────────────────────────────────────────────────
 var diamonds: int = 0:
 	set(value):
-		field = max(value, 0)
-		diamonds_changed.emit(field)
+		diamonds = max(value, 0)
+		diamonds_changed.emit(diamonds)
 
 # ── Block-creation resources ───────────────────────────────────────────────
 var creations_allowed: int = 5
 var creations_remaining: int = 5:
 	set(value):
-		field = clampi(value, 0, creations_allowed)
-		creations_changed.emit(field)
+		creations_remaining = clampi(value, 0, creations_allowed)
+		creations_changed.emit(creations_remaining)
 
 # ── Stamina / health ───────────────────────────────────────────────────────
-var player_stamina: int = 4:
+var player1_stamina: int = 4:
 	set(value):
-		field = clampi(value, 0, max_player_stamina)
-		health_changed.emit(field, max_player_stamina)
+		player1_stamina = clampi(value, 0, max_player_stamina)
+		health_changed_player1.emit(player1_stamina, max_player_stamina)
+var player2_stamina: int = 4:
+	set(value):
+		player2_stamina = clampi(value, 0, max_player_stamina)
+		health_changed_player2.emit(player2_stamina, max_player_stamina)
 var max_player_stamina: int = 4
 
 # ── Difficulty (0 = Easy, 1 = Medium, 2 = Extreme) ────────────────────────
@@ -96,7 +103,8 @@ func reset_level() -> void:
 	for node in get_tree().get_nodes_in_group("player_created"):
 		node.queue_free()
 	creations_remaining = creations_allowed
-	player_stamina = max_player_stamina
+	player1_stamina = max_player_stamina
+	player2_stamina = max_player_stamina
 
 
 func reset_game() -> void:
