@@ -60,6 +60,14 @@ func _navigate_to(page: Page) -> void:
 	_controls_page.visible    = page == Page.CONTROLS
 	if page == Page.CONTROLS:
 		_refresh_controls_page()
+	# Auto-focus first button so keyboard/controller can interact immediately.
+	match page:
+		Page.MAIN:       $Menu/MainPage/ResumeButton.grab_focus()
+		Page.SETTINGS:   $Menu/SettingsPage/AudioButton.grab_focus()
+		Page.AUDIO:      $Menu/AudioPage/BackButton_Audio.grab_focus()
+		Page.DIFFICULTY: $Menu/DifficultyPage/BackButton_Difficulty.grab_focus()
+		Page.GRAPHICS:   $Menu/GraphicsPage/BackButton_Graphics.grab_focus()
+		Page.CONTROLS:   $Menu/ControlsPage/BackButton_Controls.grab_focus()
 
 
 # ── MAIN PAGE signals ──────────────────────────────────────────────────────
@@ -162,7 +170,21 @@ func _on_rebind_button_pressed(action: String) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if _rebinding_action.is_empty() or not visible:
+	if not visible:
+		return
+	# ESC or controller Start closes the menu (when not mid-rebind).
+	if _rebinding_action.is_empty():
+		if event is InputEventKey and event.pressed and not event.echo \
+				and event.keycode == KEY_ESCAPE:
+			GameState.resume()
+			get_viewport().set_input_as_handled()
+			return
+		if event is InputEventJoypadButton and event.pressed \
+				and event.button_index == JOY_BUTTON_START:
+			GameState.resume()
+			get_viewport().set_input_as_handled()
+			return
+	if _rebinding_action.is_empty():
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		InputManager.rebind_action(_rebinding_action, event)

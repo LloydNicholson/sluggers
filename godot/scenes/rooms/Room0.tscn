@@ -1,11 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://broom0001"]
+[gd_scene load_steps=27 format=3 uid="uid://broom0001"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/objects/Diamond.tscn" id="2_diamond"]
 [ext_resource type="PackedScene" path="res://scenes/objects/MovingBlock.tscn" id="3_movingb"]
 [ext_resource type="PackedScene" path="res://scenes/objects/DeathArea.tscn" id="4_deatha"]
 [ext_resource type="PackedScene" path="res://scenes/objects/RoomWarp.tscn" id="5_warp"]
-[ext_resource type="PackedScene" path="res://scenes/objects/Enemy.tscn" id="6_enemy"]
 [ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="7_hud"]
 [ext_resource type="PackedScene" path="res://scenes/ui/PauseMenu.tscn" id="8_pausemenu"]
 [ext_resource type="PackedScene" path="res://scenes/camera/GameCamera.tscn" id="9_camera"]
@@ -224,31 +223,26 @@ x_min = 400.0
 x_max = 592.0
 speed = 200.0
 
-; ── Enemies ────────────────────────────────────────────────────────────────
-[node name="Enemy1" parent="." instance=ExtResource("6_enemy")]
-position = Vector2(320, 200)
-x_min = 256.0
-x_max = 384.0
-
-[node name="Enemy2" parent="." instance=ExtResource("6_enemy")]
-position = Vector2(640, 200)
-x_min = 576.0
-x_max = 720.0
-
 ; ── Room warp (leads to Room 1) ────────────────────────────────────────────
 [node name="RoomWarp" parent="." instance=ExtResource("5_warp")]
 position = Vector2(752, 192)
 target_scene = "res://scenes/rooms/Room1.tscn"
 
-; ── Player ─────────────────────────────────────────────────────────────────
+; ── Players ─────────────────────────────────────────────────────────────────
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(48, 192)
+controller_device = 0
+solid_creation_scene = ExtResource("10_solidcr")
+bouncy_creation_scene = ExtResource("11_bouncycr")
+
+[node name="Player2" parent="." instance=ExtResource("1_player")]
+position = Vector2(700, 192)
+controller_device = 1
 solid_creation_scene = ExtResource("10_solidcr")
 bouncy_creation_scene = ExtResource("11_bouncycr")
 
 ; ── Camera ─────────────────────────────────────────────────────────────────
 [node name="GameCamera" parent="." instance=ExtResource("9_camera")]
-target_path = NodePath("../Player")
 limit_left = 0
 limit_right = 768
 limit_top = 0
