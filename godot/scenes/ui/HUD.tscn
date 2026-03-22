@@ -8,7 +8,7 @@ script = ExtResource("1_hud")
 
 [node name="StatsPanel" type="PanelContainer" parent="."]
 offset_right = 190.0
-offset_bottom = 82.0
+offset_bottom = 96.0
 
 [node name="VBox" type="VBoxContainer" parent="StatsPanel"]
 layout_mode = 2
@@ -18,9 +18,14 @@ layout_mode = 2
 text = ""
 theme_override_font_sizes/font_size = 10
 
-[node name="HealthLabel" type="Label" parent="StatsPanel/VBox"]
+[node name="P1HealthLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
-text = "♥♥♥♥"
+text = "P1: ♥♥♥♥"
+theme_override_font_sizes/font_size = 10
+
+[node name="P2HealthLabel" type="Label" parent="StatsPanel/VBox"]
+layout_mode = 2
+text = "P2: ♥♥♥♥"
 theme_override_font_sizes/font_size = 10
 
 [node name="TimerLabel" type="Label" parent="StatsPanel/VBox"]
@@ -38,13 +43,13 @@ layout_mode = 2
 text = "Creations: 5"
 theme_override_font_sizes/font_size = 10
 
-[node name="RespawnOverlay" type="ColorRect" parent="."]
-anchor_right = 1.0
+[node name="P1RespawnOverlay" type="ColorRect" parent="."]
+anchor_right = 0.5
 anchor_bottom = 1.0
 color = Color(0, 0, 0, 0.7)
 visible = false
 
-[node name="RespawnLabel" type="Label" parent="RespawnOverlay"]
+[node name="P1RespawnLabel" type="Label" parent="P1RespawnOverlay"]
 anchor_left = 0.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -52,5 +57,23 @@ anchor_bottom = 0.5
 offset_top = -10.0
 offset_bottom = 10.0
 horizontal_alignment = 1
-text = "Respawning..."
+text = "P1 Respawning..."
+theme_override_font_sizes/font_size = 16
+
+[node name="P2RespawnOverlay" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.7)
+visible = false
+
+[node name="P2RespawnLabel" type="Label" parent="P2RespawnOverlay"]
+anchor_left = 0.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -10.0
+offset_bottom = 10.0
+horizontal_alignment = 1
+text = "P2 Respawning..."
 theme_override_font_sizes/font_size = 16
