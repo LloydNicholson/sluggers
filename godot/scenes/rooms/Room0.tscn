@@ -1,0 +1,269 @@
+[gd_scene load_steps=28 format=3 uid="uid://broom0001"]
+
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/objects/Diamond.tscn" id="2_diamond"]
+[ext_resource type="PackedScene" path="res://scenes/objects/MovingBlock.tscn" id="3_movingb"]
+[ext_resource type="PackedScene" path="res://scenes/objects/DeathArea.tscn" id="4_deatha"]
+[ext_resource type="PackedScene" path="res://scenes/ui/HUD.tscn" id="7_hud"]
+[ext_resource type="PackedScene" path="res://scenes/ui/PauseMenu.tscn" id="8_pausemenu"]
+[ext_resource type="PackedScene" path="res://scenes/camera/GameCamera.tscn" id="9_camera"]
+[ext_resource type="PackedScene" path="res://scenes/objects/SolidCreation.tscn" id="10_solidcr"]
+[ext_resource type="PackedScene" path="res://scenes/objects/BouncyCreation.tscn" id="11_bouncycr"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_bg_sky.png" id="12_bgsky"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_bg_clouds_behind.png" id="13_clouds_behind"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_bg_clouds_front.png" id="14_clouds_front"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floorL"]
+size = Vector2(268, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floorR"]
+size = Vector2(268, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat1"]
+size = Vector2(80, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat2"]
+size = Vector2(80, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat3"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat4"]
+size = Vector2(96, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat5"]
+size = Vector2(80, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat6"]
+size = Vector2(64, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wallL"]
+size = Vector2(16, 216)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wallR"]
+size = Vector2(16, 216)
+
+; ── Root ──────────────────────────────────────────────────────────────────
+[node name="Room0" type="Node2D"]
+
+; ── Sky background ─────────────────────────────────────────────────────────
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(384, 108)
+texture = ExtResource("12_bgsky")
+region_enabled = true
+region_rect = Rect2(0, 0, 768, 216)
+z_index = -10
+
+[node name="CloudsBehind" type="Sprite2D" parent="."]
+position = Vector2(384, 108)
+texture = ExtResource("13_clouds_behind")
+region_enabled = true
+region_rect = Rect2(0, 0, 768, 216)
+z_index = -9
+
+[node name="CloudsFront" type="Sprite2D" parent="."]
+position = Vector2(384, 108)
+texture = ExtResource("14_clouds_front")
+region_enabled = true
+region_rect = Rect2(0, 0, 768, 216)
+z_index = -8
+
+; ── Terrain ────────────────────────────────────────────────────────────────
+[node name="Terrain" type="Node2D" parent="."]
+
+; Left floor half (x=16 to x=284)
+[node name="FloorLeft" type="StaticBody2D" parent="Terrain"]
+position = Vector2(150, 208)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/FloorLeft"]
+shape = SubResource("RectangleShape2D_floorL")
+
+[node name="Visual" type="ColorRect" parent="Terrain/FloorLeft"]
+offset_left = -134.0
+offset_top = -8.0
+offset_right = 134.0
+offset_bottom = 8.0
+color = Color(0.35, 0.25, 0.15, 1)
+
+; Right floor half (x=484 to x=752)
+[node name="FloorRight" type="StaticBody2D" parent="Terrain"]
+position = Vector2(618, 208)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/FloorRight"]
+shape = SubResource("RectangleShape2D_floorR")
+
+[node name="Visual" type="ColorRect" parent="Terrain/FloorRight"]
+offset_left = -134.0
+offset_top = -8.0
+offset_right = 134.0
+offset_bottom = 8.0
+color = Color(0.35, 0.25, 0.15, 1)
+
+[node name="WallLeft" type="StaticBody2D" parent="Terrain"]
+position = Vector2(8, 108)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/WallLeft"]
+shape = SubResource("RectangleShape2D_wallL")
+
+[node name="Visual" type="ColorRect" parent="Terrain/WallLeft"]
+offset_left = -8.0
+offset_top = -108.0
+offset_right = 8.0
+offset_bottom = 108.0
+color = Color(0.35, 0.25, 0.15, 1)
+
+[node name="WallRight" type="StaticBody2D" parent="Terrain"]
+position = Vector2(760, 108)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/WallRight"]
+shape = SubResource("RectangleShape2D_wallR")
+
+[node name="Visual" type="ColorRect" parent="Terrain/WallRight"]
+offset_left = -8.0
+offset_top = -108.0
+offset_right = 8.0
+offset_bottom = 108.0
+color = Color(0.35, 0.25, 0.15, 1)
+
+; ── Left-side platforms ────────────────────────────────────────────────────
+[node name="Platform1" type="StaticBody2D" parent="Terrain"]
+position = Vector2(112, 168)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform1"]
+shape = SubResource("RectangleShape2D_plat1")
+
+[node name="Visual" type="ColorRect" parent="Terrain/Platform1"]
+offset_left = -40.0
+offset_top = -8.0
+offset_right = 40.0
+offset_bottom = 8.0
+color = Color(0.35, 0.25, 0.15, 1)
+
+[node name="Platform2" type="StaticBody2D" parent="Terrain"]
+position = Vector2(220, 136)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform2"]
+shape = SubResource("RectangleShape2D_plat2")
+
+[node name="Visual" type="ColorRect" parent="Terrain/Platform2"]
+offset_left = -40.0
+offset_top = -8.0
+offset_right = 40.0
+offset_bottom = 8.0
+color = Color(0.35, 0.25, 0.15, 1)
+
+[node name="Platform3" type="StaticBody2D" parent="Terrain"]
+position = Vector2(160, 96)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform3"]
+shape = SubResource("RectangleShape2D_plat3")
+
+[node name="Visual" type="ColorRect" parent="Terrain/Platform3"]
+offset_left = -32.0
+offset_top = -8.0
+offset_right = 32.0
+offset_bottom = 8.0
+color = Color(0.35, 0.25, 0.15, 1)
+
+; ── Right-side platforms (mirrored) ───────────────────────────────────────
+[node name="Platform4" type="StaticBody2D" parent="Terrain"]
+position = Vector2(656, 168)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform4"]
+shape = SubResource("RectangleShape2D_plat4")
+
+[node name="Visual" type="ColorRect" parent="Terrain/Platform4"]
+offset_left = -48.0
+offset_top = -8.0
+offset_right = 48.0
+offset_bottom = 8.0
+color = Color(0.35, 0.25, 0.15, 1)
+
+[node name="Platform5" type="StaticBody2D" parent="Terrain"]
+position = Vector2(548, 136)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform5"]
+shape = SubResource("RectangleShape2D_plat5")
+
+[node name="Visual" type="ColorRect" parent="Terrain/Platform5"]
+offset_left = -40.0
+offset_top = -8.0
+offset_right = 40.0
+offset_bottom = 8.0
+color = Color(0.35, 0.25, 0.15, 1)
+
+[node name="Platform6" type="StaticBody2D" parent="Terrain"]
+position = Vector2(608, 96)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Terrain/Platform6"]
+shape = SubResource("RectangleShape2D_plat6")
+
+[node name="Visual" type="ColorRect" parent="Terrain/Platform6"]
+offset_left = -32.0
+offset_top = -8.0
+offset_right = 32.0
+offset_bottom = 8.0
+color = Color(0.35, 0.25, 0.15, 1)
+
+; ── Death pit covering the chasm gap (x=284–484). The DeathArea scene uses a
+; ── 2000-wide collision so it catches any player falling through the gap. ──
+[node name="ChasmDeathPit" parent="." instance=ExtResource("4_deatha")]
+position = Vector2(384, 224)
+
+; ── Collectibles ───────────────────────────────────────────────────────────
+[node name="Diamond1" parent="." instance=ExtResource("2_diamond")]
+position = Vector2(112, 152)
+
+[node name="Diamond2" parent="." instance=ExtResource("2_diamond")]
+position = Vector2(220, 120)
+
+[node name="Diamond3" parent="." instance=ExtResource("2_diamond")]
+position = Vector2(160, 80)
+
+[node name="Diamond4" parent="." instance=ExtResource("2_diamond")]
+position = Vector2(656, 152)
+
+[node name="Diamond5" parent="." instance=ExtResource("2_diamond")]
+position = Vector2(548, 120)
+
+[node name="Diamond6" parent="." instance=ExtResource("2_diamond")]
+position = Vector2(608, 80)
+
+; ── Moving platforms (each stays within its own side) ─────────────────────
+[node name="MovingBlockLeft" parent="." instance=ExtResource("3_movingb")]
+position = Vector2(80, 168)
+x_min = 32.0
+x_max = 168.0
+speed = 200.0
+
+[node name="MovingBlockRight" parent="." instance=ExtResource("3_movingb")]
+position = Vector2(688, 168)
+x_min = 600.0
+x_max = 740.0
+speed = 200.0
+
+; ── Players ─────────────────────────────────────────────────────────────────
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(48, 192)
+controller_device = 0
+solid_creation_scene = ExtResource("10_solidcr")
+bouncy_creation_scene = ExtResource("11_bouncycr")
+
+[node name="Player2" parent="." instance=ExtResource("1_player")]
+position = Vector2(720, 192)
+controller_device = 1
+solid_creation_scene = ExtResource("10_solidcr")
+bouncy_creation_scene = ExtResource("11_bouncycr")
+
+; ── Camera ─────────────────────────────────────────────────────────────────
+[node name="GameCamera" parent="." instance=ExtResource("9_camera")]
+limit_left = 0
+limit_right = 768
+limit_top = 0
+limit_bottom = 216
+
+; ── UI ─────────────────────────────────────────────────────────────────────
+[node name="HUD" parent="." instance=ExtResource("7_hud")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("8_pausemenu")]
+

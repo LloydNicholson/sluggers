@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cbubble01"]
+
+[ext_resource type="Script" path="res://scenes/objects/Bubble.gd" id="1_bubble"]
+[ext_resource type="Texture2D" path="res://assets/sprites/s_bubble.png" id="2_btex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_body"]
+radius = 7.0
+
+[node name="Bubble" type="Area2D"]
+script = ExtResource("1_bubble")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_body")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_btex")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
