@@ -13,18 +13,18 @@ extends CharacterBody2D
 ##   DEAD    – death animation, auto-respawn
 ##   BUBBLED – trapped in a bubble; floats upward until mash-escaped
 ##
-## Jump fix: JUMP_SPEED reduced from -1200 to -840 so the apex (~122 px) is
-## ~61 % of room height rather than overshooting the entire room.
+## Jump tuning: JUMP_SPEED set to -600.0 (apex ~62 px, half room height, prevents chasm)
+## MIN_JUMP_SPEED at 40% for variable jump height.
 
 # ── Physics constants ──────────────────────────────────────────────────────
 const GRAVITY: float             = 2880.0   # px/s²
 const MAX_FALL_SPEED: float      = 1200.0   # px/s
 const MAX_SPEED: float           = 600.0    # px/s
 const ACCELERATION: float        = 1800.0   # px/s² (used with delta)
-const FRICTION_COEFF: float      = 0.2
+const FRICTION_COEFF: float      = 0.6
 const WALL_FRICTION_COEFF: float = 0.08
-const JUMP_SPEED: float          = -840.0   # was -1200; apex ≈ 122 px
-const MIN_JUMP_SPEED: float      = -336.0   # 40 % of JUMP_SPEED (variable height)
+const JUMP_SPEED: float          = -600.0   # apex ≈ 62 px (prevents chasm crossing)
+const MIN_JUMP_SPEED: float      = -240.0   # 40 % of JUMP_SPEED (variable height)
 const WALL_JUMP_H: float         = 480.0
 const WALL_JUMP_V: float         = -960.0
 
