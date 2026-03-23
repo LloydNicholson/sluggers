@@ -187,7 +187,7 @@ func _input(event: InputEvent) -> void:
 		# Controller A button presses focused button
 		if event is InputEventJoypadButton and event.pressed \
 				and event.button_index == JOY_BUTTON_A:
-			var focused = get_viewport().gui_get_focus()
+			var focused = get_viewport().gui_get_focus_owner()
 			if focused and focused is Button:
 				focused.emit_signal("pressed")
 				get_viewport().set_input_as_handled()
@@ -195,13 +195,13 @@ func _input(event: InputEvent) -> void:
 		# Controller D-pad up/down for navigation
 		if event is InputEventJoypadButton and event.pressed:
 			if event.button_index == JOY_BUTTON_DPAD_UP:
-				var prev = get_tree().get_prev_focusable_control(get_viewport().gui_get_focus())
+				var prev = get_tree().get_prev_focusable_control(get_viewport().gui_get_focus_owner())
 				if prev:
 					prev.grab_focus()
 				get_viewport().set_input_as_handled()
 				return
 			if event.button_index == JOY_BUTTON_DPAD_DOWN:
-				var next = get_tree().get_next_focusable_control(get_viewport().gui_get_focus())
+				var next = get_tree().get_next_focusable_control(get_viewport().gui_get_focus_owner())
 				if next:
 					next.grab_focus()
 				get_viewport().set_input_as_handled()
