@@ -1,4 +1,4 @@
-extends Area2D
+extends CharacterBody2D
 
 ## Sluggers – Bubble projectile
 ##
@@ -25,8 +25,6 @@ var _time: float = 0.0
 
 
 func _ready() -> void:
-	body_entered.connect(_on_body_entered)
-	area_entered.connect(_on_area_entered)
 	$VisibleOnScreenNotifier2D.screen_exited.connect(queue_free)
 
 
@@ -38,28 +36,12 @@ func _physics_process(delta: float) -> void:
 	# wave_velocity_y is the instantaneous vertical speed (px/s) from the wave.
 	var wave_velocity_y := WAVE_AMPLITUDE * WAVE_FREQUENCY * cos(_time * WAVE_FREQUENCY * TAU)
 	var dy := (wave_velocity_y - UPWARD_DRIFT) * delta
-	position += Vector2(dx, dy)
+	velocity = Vector2(dx, dy) / delta if delta > 0 else Vector2.ZERO
 
-	# Manual collision check with players (CharacterBody2D)
-	for body in get_overlapping_bodies():
-		if body != shooter and body.has_method("enter_bubble"):
-			body.enter_bubble()
-			queue_free()
-			return
-
-
-func _on_body_entered(body: Node) -> void:
-	# Ignore the player who shot it.
-	if body == shooter:
-		return
-	# Trap any player that has the enter_bubble method.
-	if body.has_method("enter_bubble"):
-		body.enter_bubble()
-	queue_free()
-
-
-func _on_area_entered(area: Area2D) -> void:
-	# Handle collision with other areas
-	if area != shooter and area.has_method("enter_bubble"):
-		area.enter_bubble()
-	queue_free()
+	# Use move_and_collide for proper collision detection
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		var collider = collision.get_collider()
+		if collider != shooter and collider.has_method("enter_bubble"):
+			collider.enter_bubble()
+		queue_free()
