@@ -42,6 +42,10 @@ func _physics_process(delta: float) -> void:
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		var collider = collision.get_collider()
-		if collider != shooter and collider.has_method("enter_bubble"):
-			collider.enter_bubble()
-		queue_free()
+		# Only process collision if not the shooter (let it pass through on first frame)
+		if collider != shooter:
+			# If it's a player with enter_bubble method, trap them
+			if collider.has_method("enter_bubble"):
+				collider.enter_bubble()
+			# Pop bubble on any collision (terrain, walls, other players)
+			queue_free()
