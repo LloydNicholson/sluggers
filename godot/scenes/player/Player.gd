@@ -110,11 +110,11 @@ func _ready() -> void:
 			_facing = -1  # Face left toward other player
 		_update_facing_visual()
 
-	# Add P1/P2 indicator label above bubble
+	# Add P1/P2 indicator label above player head
 	var player_indicator = Label.new()
 	player_indicator.text = "P1" if controller_device == 0 else "P2"
 	player_indicator.add_theme_font_size_override("font_size", 16)
-	player_indicator.position = Vector2(-8, -160)  # Well above bubble
+	player_indicator.position = Vector2(-8, -65)  # Just above head
 	add_child(player_indicator)
 	# Attach bubble-gun sprite at runtime (avoids modifying Player.tscn).
 	var gun_tex := load("res://assets/sprites/s_bubble_gun.png")
