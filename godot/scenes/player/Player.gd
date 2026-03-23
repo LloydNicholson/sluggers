@@ -403,7 +403,7 @@ func enter_bubble() -> void:
 
 	# Create visual bubble around player
 	_bubble_trap_visual = Sprite2D.new()
-	_bubble_trap_visual.position = Vector2(0, -14)
+	_bubble_trap_visual.position = Vector2(0, 0)  # Center on player
 	# Use the existing bubble sprite, scaled up large to surround player
 	_bubble_trap_visual.texture = load("res://assets/sprites/s_bubble.png")
 	_bubble_trap_visual.scale = Vector2(6.0, 6.0)  # Large bubble that surrounds player
@@ -412,16 +412,16 @@ func enter_bubble() -> void:
 	add_child(_bubble_trap_visual)
 
 	# Create escape prompt UI - visual button indicator
-	# Create red circle background (B button color) - custom drawn circle
+	# Create red circle background (B button color) - custom drawn circle at top-right
 	_escape_button_circle = _create_circle_control(25, Color(1.0, 0.0, 0.0, 0.9))
-	_escape_button_circle.position = Vector2(-35, -75)
+	_escape_button_circle.position = Vector2(95, -145)  # Top-right of bubble
 	add_child(_escape_button_circle)
 
-	# Create label with just the button letter
+	# Create label with just the button letter (centered on circle)
 	_escape_prompt_label = Label.new()
 	_escape_prompt_label.text = "B"
 	_escape_prompt_label.add_theme_font_size_override("font_size", 36)
-	_escape_prompt_label.position = Vector2(-23, -62)  # Centered on circle
+	_escape_prompt_label.position = Vector2(83, -135)  # Centered on circle (offset by label size)
 	add_child(_escape_prompt_label)
 
 	# Create progress bar
