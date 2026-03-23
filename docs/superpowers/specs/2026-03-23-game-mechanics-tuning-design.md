@@ -34,19 +34,29 @@ Young children need predictable, responsive controls. High friction eliminates t
 - Jump speed: -840 px/s
 - Max jump height: ~122 px (apex roughly 60% of room height)
 - Players can jump nearly the full height of the room
+- **Problem:** Can potentially jump across the 200px chasm in Room0
 
 ### Target
-- Max jump height: ~60-70 px (roughly 50% of typical room height)
+- Max jump height: ~60-70 px (safely prevent chasm crossing)
 - Maintain variable jump height (button press duration)
-- Reduce effective room coverage while keeping gameplay fun
+- Ensure horizontal distance cannot exceed 200px chasm width
+
+### Physics Calculation
+Room0 chasm width: 200px (floor gap from x=284 to x=484)
+
+With gravity 2880 px/s², to achieve 60-70px height:
+- Required JUMP_SPEED: -590 to -610 px/s
+- Time to apex: ~0.2 seconds
+- Max horizontal distance (at 600 px/s): ~120px
+- **Chasm cannot be crossed ✓**
 
 ### Implementation
-- Reduce `JUMP_SPEED` in `Player.gd` from -840 to approximately -480 to -500
-- Adjust `MIN_JUMP_SPEED` proportionally if needed (keep at ~40% of JUMP_SPEED)
-- Test to confirm max height achieves ~60-70 px apex
+- Set `JUMP_SPEED` in `Player.gd` to **-600** (gives ~62.5px height)
+- Adjust `MIN_JUMP_SPEED` from -336 to approximately **-240** (40% of new JUMP_SPEED)
+- Confirm with playtesting that jump feels good and chasm is uncrossable
 
 ### Rationale
-With high friction and responsive movement, smaller jumps create better balance. Half-room max height prevents players from crossing the entire arena with a single jump, making platforming more intentional and gameplay longer.
+Jump height and horizontal distance are mathematically tied to gravity and max speed. The -600 value balances fun platforming feel with level design constraints—tall enough to be satisfying for young children, but safely prevents jumping over the chasm middle.
 
 ---
 
@@ -172,7 +182,8 @@ Adds strategic element: ceiling height becomes a natural "safe zone" mechanic. P
 | Constant | Current | Target | File |
 |----------|---------|--------|------|
 | FRICTION_COEFF | 0.2 | 0.6-0.7 | Player.gd:24 |
-| JUMP_SPEED | -840 | -480 to -500 | Player.gd:26 |
+| JUMP_SPEED | -840 | **-600** | Player.gd:26 |
+| MIN_JUMP_SPEED | -336 | **-240** | Player.gd:27 |
 | Gun Y position | -14.0 | -20.0 | Player.gd:106 |
 | WAVE_AMPLITUDE | 18.0 | 8.0-10.0 | Bubble.gd:13 |
 | WAVE_FREQUENCY | 2.5 | 2.0-2.5 | Bubble.gd:15 |
