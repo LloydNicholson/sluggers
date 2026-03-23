@@ -16,32 +16,32 @@ layout_mode = 2
 [node name="LevelLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = ""
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 6
 
 [node name="P1HealthLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = "P1: ♥♥♥♥"
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 6
 
 [node name="P2HealthLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = "P2: ♥♥♥♥"
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 6
 
 [node name="TimerLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = "00:00"
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 6
 
 [node name="DiamondLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = "Diamonds: 0"
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 6
 
 [node name="CreationLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = "Creations: 5"
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 6
 
 [node name="P1RespawnOverlay" type="ColorRect" parent="."]
 anchor_right = 0.5
@@ -58,7 +58,7 @@ offset_top = -10.0
 offset_bottom = 10.0
 horizontal_alignment = 1
 text = "P1 Respawning..."
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 10
 
 [node name="P2RespawnOverlay" type="ColorRect" parent="."]
 anchor_left = 0.5
@@ -76,4 +76,4 @@ offset_top = -10.0
 offset_bottom = 10.0
 horizontal_alignment = 1
 text = "P2 Respawning..."
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 10
