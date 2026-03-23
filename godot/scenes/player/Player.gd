@@ -92,7 +92,7 @@ var _bubble_trap_visual: Node2D = null
 var _escape_prompt_label: Label = null
 var _escape_progress_bar: ProgressBar = null
 var _escape_button_circle: ColorRect = null
-var _player_color: Color = Color.WHITE  # Base color for this player
+var _player_color: Color = Color.WHITE  # Reset color (no longer used for tinting)
 
 
 func _ready() -> void:
@@ -103,15 +103,19 @@ func _ready() -> void:
 	floor_snap_length = 6.0
 	if _sprite:
 		_sprite.play("idle")
-		# Apply player-specific coloring and facing direction
+		# Set facing direction
 		if controller_device == 0:
-			_player_color = Color(1.0, 0.6, 0.8)  # Player 1: Pink
 			_facing = 1  # Face right
 		else:
-			_player_color = Color(0.8, 0.5, 1.0)  # Player 2: Purple
 			_facing = -1  # Face left toward other player
-		_sprite.modulate = _player_color
 		_update_facing_visual()
+
+	# Add P1/P2 indicator label above player
+	var player_indicator = Label.new()
+	player_indicator.text = "P1" if controller_device == 0 else "P2"
+	player_indicator.add_theme_font_size_override("font_size", 16)
+	player_indicator.position = Vector2(-12, -50)  # Above player
+	add_child(player_indicator)
 	# Attach bubble-gun sprite at runtime (avoids modifying Player.tscn).
 	var gun_tex := load("res://assets/sprites/s_bubble_gun.png")
 	if gun_tex:
