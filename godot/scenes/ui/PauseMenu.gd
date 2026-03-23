@@ -184,13 +184,23 @@ func _input(event: InputEvent) -> void:
 			GameState.resume()
 			get_viewport().set_input_as_handled()
 			return
-		# Controller A button presses focused button
+		# B / Circle goes back (or closes menu from main page)
+		if event is InputEventJoypadButton and event.pressed \
+				and event.button_index == JOY_BUTTON_B:
+			_on_back_pressed()
+			get_viewport().set_input_as_handled()
+			return
+		# Controller A button activates the focused control
 		if event is InputEventJoypadButton and event.pressed \
 				and event.button_index == JOY_BUTTON_A:
 			var focused = get_viewport().gui_get_focus_owner()
-			if focused and focused is Button:
-				focused.emit_signal("pressed")
-				get_viewport().set_input_as_handled()
+			if focused is CheckButton or focused is CheckBox:
+				# Toggle the button and fire the toggled signal
+				focused.button_pressed = !focused.button_pressed
+				focused.toggled.emit(focused.button_pressed)
+			elif focused is Button:
+				focused.pressed.emit()
+			get_viewport().set_input_as_handled()
 			return
 		# Controller D-pad up/down for navigation
 		if event is InputEventJoypadButton and event.pressed:
