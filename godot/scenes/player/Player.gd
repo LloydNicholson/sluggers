@@ -88,6 +88,7 @@ var _bubble_scene: PackedScene = preload("res://scenes/objects/Bubble.tscn")
 
 @onready var _sprite: AnimatedSprite2D = $Sprite
 var _gun_sprite: Sprite2D = null
+var _bubble_trap_visual: Node2D = null
 
 
 func _ready() -> void:
@@ -358,11 +359,24 @@ func enter_bubble() -> void:
 	_bubble_timer = 0.0
 	velocity = Vector2.ZERO
 
+	# Create visual bubble around player
+	_bubble_trap_visual = Sprite2D.new()
+	_bubble_trap_visual.position = Vector2(0, -14)
+	# Use the existing bubble sprite, scaled up 3x
+	_bubble_trap_visual.texture = load("res://assets/sprites/s_bubble.png")
+	_bubble_trap_visual.scale = Vector2(3.0, 3.0)  # Scale up the bubble sprite 3x
+	_bubble_trap_visual.modulate = Color(0.6, 0.85, 1.0, 0.7)  # Light blue tint
+	_bubble_trap_visual.z_index = -1  # Behind player
+	add_child(_bubble_trap_visual)
+
 
 func _exit_bubble() -> void:
 	_state = State.AIR
 	if _sprite:
 		_sprite.modulate = Color.WHITE
+	if _bubble_trap_visual:
+		_bubble_trap_visual.queue_free()
+		_bubble_trap_visual = null
 
 
 # ── Physics ────────────────────────────────────────────────────────────────
