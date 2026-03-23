@@ -89,6 +89,8 @@ var _bubble_scene: PackedScene = preload("res://scenes/objects/Bubble.tscn")
 @onready var _sprite: AnimatedSprite2D = $Sprite
 var _gun_sprite: Sprite2D = null
 var _bubble_trap_visual: Node2D = null
+var _escape_prompt_label: Label = null
+var _escape_progress_bar: ProgressBar = null
 
 
 func _ready() -> void:
@@ -225,6 +227,8 @@ func _tick_bubble(delta: float) -> void:
 	# Mash any face button to escape.
 	if _joy_any_face():
 		_bubble_hits += 1
+		if _escape_progress_bar:
+			_escape_progress_bar.value = float(_bubble_hits)
 		if _bubble_hits >= BUBBLE_ESCAPE_HITS:
 			_exit_bubble()
 			return
@@ -378,6 +382,22 @@ func enter_bubble() -> void:
 	_bubble_trap_visual.z_index = -1  # Behind player
 	add_child(_bubble_trap_visual)
 
+	# Create escape prompt UI
+	_escape_prompt_label = Label.new()
+	_escape_prompt_label.text = "MASH B BUTTON"
+	_escape_prompt_label.add_theme_font_size_override("font_size", 24)
+	_escape_prompt_label.position = Vector2(-80, -60)
+	add_child(_escape_prompt_label)
+
+	# Create progress bar
+	_escape_progress_bar = ProgressBar.new()
+	_escape_progress_bar.min_value = 0
+	_escape_progress_bar.max_value = float(BUBBLE_ESCAPE_HITS)
+	_escape_progress_bar.value = 0
+	_escape_progress_bar.size = Vector2(80, 16)
+	_escape_progress_bar.position = Vector2(-40, -35)
+	add_child(_escape_progress_bar)
+
 
 func _exit_bubble() -> void:
 	_state = State.AIR
@@ -386,6 +406,12 @@ func _exit_bubble() -> void:
 	if _bubble_trap_visual:
 		_bubble_trap_visual.queue_free()
 		_bubble_trap_visual = null
+	if _escape_prompt_label:
+		_escape_prompt_label.queue_free()
+		_escape_prompt_label = null
+	if _escape_progress_bar:
+		_escape_progress_bar.queue_free()
+		_escape_progress_bar = null
 
 
 # ── Physics ────────────────────────────────────────────────────────────────
