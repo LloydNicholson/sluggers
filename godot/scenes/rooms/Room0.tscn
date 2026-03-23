@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://211k2ta5o2uq" path="res://assets/sprites/s_bg_sky.png" id="12_bgsky"]
 [ext_resource type="Texture2D" uid="uid://b4asydrvnb2bd" path="res://assets/sprites/s_bg_clouds_behind.png" id="13_clouds_behind"]
 [ext_resource type="Texture2D" uid="uid://bsyonbsrbg4eg" path="res://assets/sprites/s_bg_clouds_front.png" id="14_clouds_front"]
+[ext_resource type="AudioStream" uid="uid://bmusic001" path="res://assets/music/bgm.ogg" id="15_bgm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floorL"]
 size = Vector2(268, 16)
@@ -119,6 +120,11 @@ limit_left = 0
 limit_top = 0
 limit_right = 768
 limit_bottom = 216
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." unique_id=999888777]
+stream = ExtResource("15_bgm")
+autoplay = true
+bus = &"Music"
 
 [node name="HUD" parent="." unique_id=1424633153 instance=ExtResource("7_hud")]
 
