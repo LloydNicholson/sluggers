@@ -114,7 +114,9 @@ func _ready() -> void:
 	var player_indicator = Label.new()
 	player_indicator.text = "P1" if controller_device == 0 else "P2"
 	player_indicator.add_theme_font_size_override("font_size", 16)
-	player_indicator.position = Vector2(-8, -65)  # Just above head
+	# Color: P1 = cyan, P2 = orange
+	player_indicator.add_theme_color_override("font_color", Color.CYAN if controller_device == 0 else Color.ORANGE)
+	player_indicator.position = Vector2(-8, -80)  # A bit above head
 	add_child(player_indicator)
 	# Attach bubble-gun sprite at runtime (avoids modifying Player.tscn).
 	var gun_tex := load("res://assets/sprites/s_bubble_gun.png")
