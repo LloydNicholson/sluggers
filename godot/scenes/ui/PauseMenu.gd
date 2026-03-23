@@ -184,6 +184,24 @@ func _input(event: InputEvent) -> void:
 			GameState.resume()
 			get_viewport().set_input_as_handled()
 			return
+		# Controller A button presses focused button
+		if event is InputEventJoypadButton and event.pressed \
+				and event.button_index == JOY_BUTTON_A:
+			var focused = get_tree().root.gui_get_focus()
+			if focused and focused is Button:
+				focused.emit_signal("pressed")
+				get_viewport().set_input_as_handled()
+			return
+		# Controller D-pad up/down for navigation
+		if event is InputEventJoypadButton and event.pressed:
+			if event.button_index == JOY_BUTTON_DPAD_UP:
+				get_tree().root.gui_set_focus(get_tree().get_prev_focusable_control(get_tree().root.gui_get_focus()))
+				get_viewport().set_input_as_handled()
+				return
+			if event.button_index == JOY_BUTTON_DPAD_DOWN:
+				get_tree().root.gui_set_focus(get_tree().get_next_focusable_control(get_tree().root.gui_get_focus()))
+				get_viewport().set_input_as_handled()
+				return
 	if _rebinding_action.is_empty():
 		return
 	if event is InputEventKey and event.pressed and not event.echo:
