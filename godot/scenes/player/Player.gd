@@ -110,11 +110,11 @@ func _ready() -> void:
 			_facing = -1  # Face left toward other player
 		_update_facing_visual()
 
-	# Add P1/P2 indicator label above player
+	# Add P1/P2 indicator label above player head
 	var player_indicator = Label.new()
 	player_indicator.text = "P1" if controller_device == 0 else "P2"
 	player_indicator.add_theme_font_size_override("font_size", 16)
-	player_indicator.position = Vector2(-12, -50)  # Above player
+	player_indicator.position = Vector2(-12, -85)  # Well above head
 	add_child(player_indicator)
 	# Attach bubble-gun sprite at runtime (avoids modifying Player.tscn).
 	var gun_tex := load("res://assets/sprites/s_bubble_gun.png")
@@ -412,18 +412,16 @@ func enter_bubble() -> void:
 	add_child(_bubble_trap_visual)
 
 	# Create escape prompt UI - visual button indicator
-	# Create red circle background (B button color)
-	_escape_button_circle = ColorRect.new()
-	_escape_button_circle.color = Color(1.0, 0.0, 0.0, 0.9)  # Red for B button
-	_escape_button_circle.size = Vector2(50, 50)
-	_escape_button_circle.position = Vector2(-60, -75)
+	# Create red circle background (B button color) - custom drawn circle
+	_escape_button_circle = _create_circle_control(25, Color(1.0, 0.0, 0.0, 0.9))
+	_escape_button_circle.position = Vector2(-35, -75)
 	add_child(_escape_button_circle)
 
 	# Create label with just the button letter
 	_escape_prompt_label = Label.new()
 	_escape_prompt_label.text = "B"
 	_escape_prompt_label.add_theme_font_size_override("font_size", 36)
-	_escape_prompt_label.position = Vector2(-48, -62)  # Centered on circle
+	_escape_prompt_label.position = Vector2(-23, -62)  # Centered on circle
 	add_child(_escape_prompt_label)
 
 	# Create progress bar
@@ -636,3 +634,14 @@ static func _apply_friction(value: float, coeff: float) -> float:
 	if absf(value) <= drag:
 		return 0.0
 	return value - signf(value) * drag
+
+
+## Helper: create a circular control with given radius and color.
+func _create_circle_control(radius: float, color: Color) -> Control:
+	var circle = Control.new()
+	circle.custom_minimum_size = Vector2(radius * 2, radius * 2)
+	# Draw the circle when the control is rendered
+	circle.draw.connect(func():
+		circle.draw_circle(Vector2(radius, radius), radius, color)
+	)
+	return circle
