@@ -10,9 +10,9 @@ extends Area2D
 
 const SPEED := 200.0
 ## Amplitude of the vertical sinusoidal wave (px).
-const WAVE_AMPLITUDE := 18.0
+const WAVE_AMPLITUDE := 10.0
 ## Frequency of the wave oscillation (cycles per second).
-const WAVE_FREQUENCY := 2.5
+const WAVE_FREQUENCY := 2.0
 ## Gentle upward drift applied on top of the wave (px/s).
 const UPWARD_DRIFT := 20.0
 
