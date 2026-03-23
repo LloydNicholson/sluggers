@@ -91,7 +91,7 @@ var _gun_sprite: Sprite2D = null
 var _bubble_trap_visual: Node2D = null
 var _escape_prompt_label: Label = null
 var _escape_progress_bar: ProgressBar = null
-var _escape_button_circle: ColorRect = null
+var _escape_button_circle: Control = null
 var _player_color: Color = Color.WHITE  # Reset color (no longer used for tinting)
 
 
