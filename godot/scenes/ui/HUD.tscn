@@ -7,41 +7,46 @@ layer = 10
 script = ExtResource("1_hud")
 
 [node name="StatsPanel" type="PanelContainer" parent="."]
-offset_right = 190.0
-offset_bottom = 96.0
+offset_right = 120.0
+offset_bottom = 75.0
 
 [node name="VBox" type="VBoxContainer" parent="StatsPanel"]
 layout_mode = 2
+separation = 0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_bottom = 2
 
 [node name="LevelLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = ""
-theme_override_font_sizes/font_size = 6
+theme_override_font_sizes/font_size = 5
 
 [node name="P1HealthLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = "P1: ♥♥♥♥"
-theme_override_font_sizes/font_size = 6
+theme_override_font_sizes/font_size = 5
 
 [node name="P2HealthLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = "P2: ♥♥♥♥"
-theme_override_font_sizes/font_size = 6
+theme_override_font_sizes/font_size = 5
 
 [node name="TimerLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = "00:00"
-theme_override_font_sizes/font_size = 6
+theme_override_font_sizes/font_size = 5
 
 [node name="DiamondLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = "Diamonds: 0"
-theme_override_font_sizes/font_size = 6
+theme_override_font_sizes/font_size = 5
 
 [node name="CreationLabel" type="Label" parent="StatsPanel/VBox"]
 layout_mode = 2
 text = "Creations: 5"
-theme_override_font_sizes/font_size = 6
+theme_override_font_sizes/font_size = 5
 
 [node name="P1RespawnOverlay" type="ColorRect" parent="."]
 anchor_right = 0.5
