@@ -103,7 +103,7 @@ func _ready() -> void:
 	if gun_tex:
 		_gun_sprite = Sprite2D.new()
 		_gun_sprite.texture = gun_tex
-		_gun_sprite.position = Vector2(8.0, -14.0)
+		_gun_sprite.position = Vector2(8.0, -20.0)
 		_gun_sprite.z_index = 1
 		add_child(_gun_sprite)
 
