@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends Area2D
 
 ## Sluggers – Bubble projectile
 ##
@@ -14,7 +14,7 @@ const WAVE_AMPLITUDE := 10.0
 ## Frequency of the wave oscillation (cycles per second).
 const WAVE_FREQUENCY := 2.0
 ## Gentle upward drift applied on top of the wave (px/s).
-const UPWARD_DRIFT := 20.0
+const UPWARD_DRIFT := 10.0
 
 ## Direction the bubble travels (set by the firing player).
 var direction := Vector2.RIGHT
@@ -36,16 +36,18 @@ func _physics_process(delta: float) -> void:
 	# wave_velocity_y is the instantaneous vertical speed (px/s) from the wave.
 	var wave_velocity_y := WAVE_AMPLITUDE * WAVE_FREQUENCY * cos(_time * WAVE_FREQUENCY * TAU)
 	var dy := (wave_velocity_y - UPWARD_DRIFT) * delta
-	velocity = Vector2(dx, dy) / delta if delta > 0 else Vector2.ZERO
 
-	# Use move_and_collide for proper collision detection
-	var collision = move_and_collide(velocity * delta)
-	if collision:
-		var collider = collision.get_collider()
-		# Only process collision if not the shooter (let it pass through on first frame)
-		if collider != shooter:
-			# If it's a player with enter_bubble method, trap them
-			if collider.has_method("enter_bubble"):
-				collider.enter_bubble()
-			# Pop bubble on any collision (terrain, walls, other players)
-			queue_free()
+	# Update position based on calculated movement
+	position += Vector2(dx, dy)
+
+	# Check for collisions with bodies in this area
+	for body in get_overlapping_bodies():
+		# Skip the shooter on first frame (collision with self)
+		if body == shooter:
+			continue
+		# If it's a player, trap them
+		if body.has_method("enter_bubble"):
+			body.enter_bubble()
+		# Pop bubble on collision
+		queue_free()
+		return

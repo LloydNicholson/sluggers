@@ -18,14 +18,17 @@ custom_minimum_size = Vector2(140, 0)
 
 [node name="ResumeButton" type="Button" parent="Menu/MainPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Resume"
 
 [node name="SettingsButton" type="Button" parent="Menu/MainPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Settings"
 
 [node name="QuitButton" type="Button" parent="Menu/MainPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Quit"
 
 [node name="SettingsPage" type="VBoxContainer" parent="Menu"]
@@ -34,22 +37,27 @@ visible = false
 
 [node name="AudioButton" type="Button" parent="Menu/SettingsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Audio"
 
 [node name="DifficultyButton" type="Button" parent="Menu/SettingsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Difficulty"
 
 [node name="GraphicsButton" type="Button" parent="Menu/SettingsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Graphics"
 
 [node name="ControlsButton" type="Button" parent="Menu/SettingsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Controls"
 
 [node name="BackButton_Settings" type="Button" parent="Menu/SettingsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Back"
 
 [node name="AudioPage" type="VBoxContainer" parent="Menu"]
@@ -62,6 +70,7 @@ text = "Master Volume"
 
 [node name="MasterSlider" type="HSlider" parent="Menu/AudioPage"]
 layout_mode = 2
+focus_mode = 2
 min_value = 0.0
 max_value = 1.0
 step = 0.05
@@ -73,6 +82,7 @@ text = "Music Volume"
 
 [node name="MusicSlider" type="HSlider" parent="Menu/AudioPage"]
 layout_mode = 2
+focus_mode = 2
 min_value = 0.0
 max_value = 1.0
 step = 0.05
@@ -84,6 +94,7 @@ text = "Sound Volume"
 
 [node name="SoundSlider" type="HSlider" parent="Menu/AudioPage"]
 layout_mode = 2
+focus_mode = 2
 min_value = 0.0
 max_value = 1.0
 step = 0.05
@@ -91,6 +102,7 @@ value = 1.0
 
 [node name="BackButton_Audio" type="Button" parent="Menu/AudioPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Back"
 
 [node name="DifficultyPage" type="VBoxContainer" parent="Menu"]
@@ -103,9 +115,11 @@ text = "Enemy Difficulty"
 
 [node name="DifficultyOption" type="OptionButton" parent="Menu/DifficultyPage"]
 layout_mode = 2
+focus_mode = 2
 
 [node name="BackButton_Difficulty" type="Button" parent="Menu/DifficultyPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Back"
 
 [node name="GraphicsPage" type="VBoxContainer" parent="Menu"]
@@ -118,13 +132,16 @@ text = "Resolution"
 
 [node name="ResolutionOption" type="OptionButton" parent="Menu/GraphicsPage"]
 layout_mode = 2
+focus_mode = 2
 
 [node name="FullscreenCheck" type="CheckButton" parent="Menu/GraphicsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Fullscreen"
 
 [node name="BackButton_Graphics" type="Button" parent="Menu/GraphicsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Back"
 
 [node name="ControlsPage" type="VBoxContainer" parent="Menu"]
@@ -137,29 +154,35 @@ text = "Key Bindings (click to rebind)"
 
 [node name="MoveLeftBtn" type="Button" parent="Menu/ControlsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Move Left: Left"
 metadata/_action = "move_left"
 
 [node name="MoveRightBtn" type="Button" parent="Menu/ControlsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Move Right: Right"
 metadata/_action = "move_right"
 
 [node name="JumpBtn" type="Button" parent="Menu/ControlsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Jump: Up"
 metadata/_action = "jump"
 
 [node name="CreateSolidBtn" type="Button" parent="Menu/ControlsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Create Solid: Z"
 metadata/_action = "create_solid"
 
 [node name="CreateBouncyBtn" type="Button" parent="Menu/ControlsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Create Bouncy: X"
 metadata/_action = "create_bouncy"
 
 [node name="BackButton_Controls" type="Button" parent="Menu/ControlsPage"]
 layout_mode = 2
+focus_mode = 2
 text = "Back"

@@ -19,9 +19,9 @@ extends CharacterBody2D
 # ── Physics constants ──────────────────────────────────────────────────────
 const GRAVITY: float             = 2880.0   # px/s²
 const MAX_FALL_SPEED: float      = 1200.0   # px/s
-const MAX_SPEED: float           = 600.0    # px/s
+const MAX_SPEED: float           = 300.0    # px/s (reduced for child-friendly slow movement)
 const ACCELERATION: float        = 1800.0   # px/s² (used with delta)
-const FRICTION_COEFF: float      = 0.85  # High friction for slow, controlled movement
+const FRICTION_COEFF: float      = 0.5   # Very high friction for very slow, controlled movement
 const WALL_FRICTION_COEFF: float = 0.08
 const JUMP_SPEED: float          = -600.0   # apex ≈ 62 px (prevents chasm crossing)
 const MIN_JUMP_SPEED: float      = -240.0   # 40 % of JUMP_SPEED (variable height)
