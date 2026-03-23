@@ -405,7 +405,7 @@ func enter_bubble() -> void:
 
 	# Create visual bubble around player
 	_bubble_trap_visual = Sprite2D.new()
-	_bubble_trap_visual.position = Vector2(0, 0)  # Center on player
+	_bubble_trap_visual.position = Vector2(0, -25)  # Center on player body, not feet
 	# Use the existing bubble sprite, scaled up large to surround player
 	_bubble_trap_visual.texture = load("res://assets/sprites/s_bubble.png")
 	_bubble_trap_visual.scale = Vector2(6.0, 6.0)  # Large bubble that surrounds player
@@ -414,16 +414,21 @@ func enter_bubble() -> void:
 	add_child(_bubble_trap_visual)
 
 	# Create escape prompt UI - visual button indicator
-	# Create red circle background (B button color) - custom drawn circle at top-right of bubble
-	_escape_button_circle = _create_circle_control(15, Color(1.0, 0.0, 0.0, 0.9))
-	_escape_button_circle.position = Vector2(40, -60)  # Top-right of bubble, closer
+	# Circle radius=15, so center of drawn circle = position + (15, 15)
+	# Place circle so its center sits at top-right of bubble
+	var circle_radius := 15.0
+	var circle_pos := Vector2(40.0, -65.0)  # Top-right of bubble
+	_escape_button_circle = _create_circle_control(circle_radius, Color(1.0, 0.0, 0.0, 0.9))
+	_escape_button_circle.position = circle_pos
 	add_child(_escape_button_circle)
 
-	# Create label with just the button letter (centered inside circle)
+	# Center B label inside the circle (circle center = circle_pos + radius)
 	_escape_prompt_label = Label.new()
 	_escape_prompt_label.text = "B"
-	_escape_prompt_label.add_theme_font_size_override("font_size", 24)
-	_escape_prompt_label.position = Vector2(32, -54)  # Centered inside circle
+	_escape_prompt_label.add_theme_font_size_override("font_size", 20)
+	# Circle center in player space: circle_pos + (radius, radius)
+	# Label top-left = circle_center - (half_label_width, half_label_height) ≈ (-8, -12) for font_size 20
+	_escape_prompt_label.position = circle_pos + Vector2(circle_radius - 8.0, circle_radius - 14.0)
 	add_child(_escape_prompt_label)
 
 	# Create progress bar
