@@ -91,6 +91,7 @@ var _gun_sprite: Sprite2D = null
 var _bubble_trap_visual: Node2D = null
 var _escape_prompt_label: Label = null
 var _escape_progress_bar: ProgressBar = null
+var _escape_button_circle: ColorRect = null
 var _player_color: Color = Color.WHITE  # Base color for this player
 
 
@@ -406,11 +407,19 @@ func enter_bubble() -> void:
 	_bubble_trap_visual.z_index = -1  # Behind player
 	add_child(_bubble_trap_visual)
 
-	# Create escape prompt UI
+	# Create escape prompt UI - visual button indicator
+	# Create red circle background (B button color)
+	_escape_button_circle = ColorRect.new()
+	_escape_button_circle.color = Color(1.0, 0.0, 0.0, 0.9)  # Red for B button
+	_escape_button_circle.size = Vector2(50, 50)
+	_escape_button_circle.position = Vector2(-60, -75)
+	add_child(_escape_button_circle)
+
+	# Create label with just the button letter
 	_escape_prompt_label = Label.new()
-	_escape_prompt_label.text = "MASH B BUTTON"
-	_escape_prompt_label.add_theme_font_size_override("font_size", 24)
-	_escape_prompt_label.position = Vector2(-80, -60)
+	_escape_prompt_label.text = "B"
+	_escape_prompt_label.add_theme_font_size_override("font_size", 36)
+	_escape_prompt_label.position = Vector2(-48, -62)  # Centered on circle
 	add_child(_escape_prompt_label)
 
 	# Create progress bar
@@ -430,6 +439,9 @@ func _exit_bubble() -> void:
 	if _bubble_trap_visual:
 		_bubble_trap_visual.queue_free()
 		_bubble_trap_visual = null
+	if _escape_button_circle:
+		_escape_button_circle.queue_free()
+		_escape_button_circle = null
 	if _escape_prompt_label:
 		_escape_prompt_label.queue_free()
 		_escape_prompt_label = null
@@ -447,6 +459,9 @@ func _burst_bubble() -> void:
 	if _bubble_trap_visual:
 		_bubble_trap_visual.queue_free()
 		_bubble_trap_visual = null
+	if _escape_button_circle:
+		_escape_button_circle.queue_free()
+		_escape_button_circle = null
 	if _escape_prompt_label:
 		_escape_prompt_label.queue_free()
 		_escape_prompt_label = null
