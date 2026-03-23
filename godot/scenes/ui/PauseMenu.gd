@@ -135,10 +135,7 @@ func _on_difficulty_option_selected(index: int) -> void:
 # ── GRAPHICS PAGE signals ──────────────────────────────────────────────────
 
 func _on_fullscreen_toggled(button_pressed: bool) -> void:
-	if button_pressed:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-	else:
-		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+	get_tree().root.mode = Window.MODE_FULLSCREEN if button_pressed else Window.MODE_WINDOWED
 
 
 func _on_resolution_selected(index: int) -> void:
