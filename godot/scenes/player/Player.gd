@@ -23,8 +23,8 @@ const MAX_SPEED: float           = 300.0    # px/s (reduced for child-friendly s
 const ACCELERATION: float        = 1800.0   # px/s² (used with delta)
 const FRICTION_COEFF: float      = 0.5   # Very high friction for very slow, controlled movement
 const WALL_FRICTION_COEFF: float = 0.08
-const JUMP_SPEED: float          = -600.0   # apex ≈ 62 px (prevents chasm crossing)
-const MIN_JUMP_SPEED: float      = -240.0   # 40 % of JUMP_SPEED (variable height)
+const JUMP_SPEED: float          = -700.0   # apex ≈ 85 px
+const MIN_JUMP_SPEED: float      = -280.0   # 40 % of JUMP_SPEED (variable height)
 const WALL_JUMP_H: float         = 480.0
 const WALL_JUMP_V: float         = -960.0
 
@@ -431,13 +431,15 @@ func enter_bubble() -> void:
 	_escape_prompt_label.position = circle_pos + Vector2(circle_radius - 8.0, circle_radius - 14.0)
 	add_child(_escape_prompt_label)
 
-	# Create progress bar
+	# Create progress bar positioned under B button with no % text
 	_escape_progress_bar = ProgressBar.new()
 	_escape_progress_bar.min_value = 0
 	_escape_progress_bar.max_value = float(BUBBLE_ESCAPE_HITS)
 	_escape_progress_bar.value = 0
-	_escape_progress_bar.size = Vector2(80, 16)
-	_escape_progress_bar.position = Vector2(-40, 50)  # Below player in bubble
+	_escape_progress_bar.show_percentage = false
+	_escape_progress_bar.size = Vector2(circle_radius * 2, 6)
+	# Position directly under the B button circle
+	_escape_progress_bar.position = circle_pos + Vector2(0, circle_radius * 2 + 2)
 	add_child(_escape_progress_bar)
 
 
