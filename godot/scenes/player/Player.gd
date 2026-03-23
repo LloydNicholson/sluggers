@@ -208,6 +208,15 @@ func _tick_respawn(delta: float) -> void:
 
 
 func _tick_bubble(delta: float) -> void:
+	# Create bobbing animation on first frame of bubble
+	if _bubble_timer == 0.0 and _bubble_trap_visual:
+		var tween = create_tween()
+		tween.set_loops()  # Loop infinitely
+		tween.set_trans(Tween.TRANS_SINE)
+		tween.set_ease(Tween.EASE_IN_OUT)
+		tween.tween_property(_bubble_trap_visual, "position:y", -14.0 - 10.0, 0.8)
+		tween.tween_property(_bubble_trap_visual, "position:y", -14.0 + 10.0, 0.8)
+
 	_bubble_timer += delta
 	# Float gently upward; no horizontal control.
 	velocity.x = 0.0
