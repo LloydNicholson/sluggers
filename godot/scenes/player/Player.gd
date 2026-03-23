@@ -224,6 +224,12 @@ func _tick_bubble(delta: float) -> void:
 	velocity.x = 0.0
 	velocity.y = BUBBLE_FLOAT_VY
 	move_and_slide()
+
+	# Check for ceiling collision
+	if is_on_ceiling():
+		_burst_bubble()
+		return
+
 	# Mash any face button to escape.
 	if _joy_any_face():
 		_bubble_hits += 1
@@ -401,6 +407,23 @@ func enter_bubble() -> void:
 
 func _exit_bubble() -> void:
 	_state = State.AIR
+	if _sprite:
+		_sprite.modulate = Color.WHITE
+	if _bubble_trap_visual:
+		_bubble_trap_visual.queue_free()
+		_bubble_trap_visual = null
+	if _escape_prompt_label:
+		_escape_prompt_label.queue_free()
+		_escape_prompt_label = null
+	if _escape_progress_bar:
+		_escape_progress_bar.queue_free()
+		_escape_progress_bar = null
+
+
+func _burst_bubble() -> void:
+	"""Bubble hits ceiling or obstacle and bursts, releasing player."""
+	_state = State.AIR
+	velocity.y = -120.0  # Small upward bounce on burst
 	if _sprite:
 		_sprite.modulate = Color.WHITE
 	if _bubble_trap_visual:
