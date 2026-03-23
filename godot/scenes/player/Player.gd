@@ -110,11 +110,11 @@ func _ready() -> void:
 			_facing = -1  # Face left toward other player
 		_update_facing_visual()
 
-	# Add P1/P2 indicator label above player head
+	# Add P1/P2 indicator label above bubble
 	var player_indicator = Label.new()
 	player_indicator.text = "P1" if controller_device == 0 else "P2"
 	player_indicator.add_theme_font_size_override("font_size", 16)
-	player_indicator.position = Vector2(-12, -85)  # Well above head
+	player_indicator.position = Vector2(-8, -160)  # Well above bubble
 	add_child(player_indicator)
 	# Attach bubble-gun sprite at runtime (avoids modifying Player.tscn).
 	var gun_tex := load("res://assets/sprites/s_bubble_gun.png")
@@ -414,14 +414,14 @@ func enter_bubble() -> void:
 	# Create escape prompt UI - visual button indicator
 	# Create red circle background (B button color) - custom drawn circle at top-right
 	_escape_button_circle = _create_circle_control(15, Color(1.0, 0.0, 0.0, 0.9))
-	_escape_button_circle.position = Vector2(80, -120)  # Top-right of bubble
+	_escape_button_circle.position = Vector2(105, -105)  # Top-right edge of bubble
 	add_child(_escape_button_circle)
 
 	# Create label with just the button letter (centered on circle)
 	_escape_prompt_label = Label.new()
 	_escape_prompt_label.text = "B"
 	_escape_prompt_label.add_theme_font_size_override("font_size", 24)
-	_escape_prompt_label.position = Vector2(72, -114)  # Centered on circle (offset by label size)
+	_escape_prompt_label.position = Vector2(97, -99)  # Centered on circle (offset by label size)
 	add_child(_escape_prompt_label)
 
 	# Create progress bar
@@ -430,7 +430,7 @@ func enter_bubble() -> void:
 	_escape_progress_bar.max_value = float(BUBBLE_ESCAPE_HITS)
 	_escape_progress_bar.value = 0
 	_escape_progress_bar.size = Vector2(80, 16)
-	_escape_progress_bar.position = Vector2(-40, -35)
+	_escape_progress_bar.position = Vector2(-40, 50)  # Below player in bubble
 	add_child(_escape_progress_bar)
 
 
