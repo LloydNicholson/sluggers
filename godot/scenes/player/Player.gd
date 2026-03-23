@@ -55,7 +55,7 @@ enum State { GROUND, AIR, WALL, DEAD, BUBBLED }
 var _state: State = State.AIR
 
 var _wall_dir: int = 0
-var _facing:   int = 1
+var _facing:   int = 1  # Set to -1 for Player 2 (right side) in _ready()
 
 # ── Platforming timers ─────────────────────────────────────────────────────
 var _coyote_timer:      float = 0.0
@@ -102,20 +102,31 @@ func _ready() -> void:
 	floor_snap_length = 6.0
 	if _sprite:
 		_sprite.play("idle")
-		# Apply player-specific coloring
+		# Apply player-specific coloring and facing direction
 		if controller_device == 0:
 			_player_color = Color(1.0, 0.6, 0.8)  # Player 1: Pink
+			_facing = 1  # Face right
 		else:
 			_player_color = Color(0.8, 0.5, 1.0)  # Player 2: Purple
+			_facing = -1  # Face left toward other player
 		_sprite.modulate = _player_color
+		_update_facing_visual()
 	# Attach bubble-gun sprite at runtime (avoids modifying Player.tscn).
 	var gun_tex := load("res://assets/sprites/s_bubble_gun.png")
 	if gun_tex:
 		_gun_sprite = Sprite2D.new()
 		_gun_sprite.texture = gun_tex
-		_gun_sprite.position = Vector2(8.0, -20.0)
+		_gun_sprite.position = Vector2(8.0, -26.0)  # Higher up (was -20.0)
+		_gun_sprite.scale = Vector2(1.5, 1.5)  # Bigger gun (1.5x size)
 		_gun_sprite.z_index = 1
 		add_child(_gun_sprite)
+		# Add idle sway animation to gun
+		var gun_sway = create_tween()
+		gun_sway.set_loops()
+		gun_sway.set_trans(Tween.TRANS_SINE)
+		gun_sway.set_ease(Tween.EASE_IN_OUT)
+		gun_sway.tween_property(_gun_sprite, "position:y", -26.0 - 4.0, 1.0)
+		gun_sway.tween_property(_gun_sprite, "position:y", -26.0 + 4.0, 1.0)
 
 
 # ── Joypad edge-detection via _input ──────────────────────────────────────
@@ -372,7 +383,7 @@ func _shoot_bubble() -> void:
 	var b: Node2D = _bubble_scene.instantiate()
 	b.set("direction", Vector2(_facing, 0.0))
 	b.set("shooter", self)
-	b.global_position = global_position + Vector2(_facing * 20.0, -14.0)
+	b.global_position = global_position + Vector2(_facing * 20.0, -26.0)  # Match gun position
 	get_parent().add_child(b)
 
 
