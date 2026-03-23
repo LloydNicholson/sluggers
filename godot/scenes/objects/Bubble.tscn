@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/s_bubble.png" id="2_btex"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
-radius = 7.0
+radius = 14.0
 
 [node name="Bubble" type="Area2D"]
 script = ExtResource("1_bubble")
@@ -13,6 +13,7 @@ script = ExtResource("1_bubble")
 shape = SubResource("CircleShape2D_body")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.4, 1.4)
 texture = ExtResource("2_btex")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

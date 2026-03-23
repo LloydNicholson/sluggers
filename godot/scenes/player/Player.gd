@@ -399,9 +399,9 @@ func enter_bubble() -> void:
 	# Create visual bubble around player
 	_bubble_trap_visual = Sprite2D.new()
 	_bubble_trap_visual.position = Vector2(0, -14)
-	# Use the existing bubble sprite, scaled up 3x
+	# Use the existing bubble sprite, scaled up large to surround player
 	_bubble_trap_visual.texture = load("res://assets/sprites/s_bubble.png")
-	_bubble_trap_visual.scale = Vector2(3.0, 3.0)  # Scale up the bubble sprite 3x
+	_bubble_trap_visual.scale = Vector2(6.0, 6.0)  # Large bubble that surrounds player
 	_bubble_trap_visual.modulate = Color(0.6, 0.85, 1.0, 0.7)  # Light blue tint
 	_bubble_trap_visual.z_index = -1  # Behind player
 	add_child(_bubble_trap_visual)
