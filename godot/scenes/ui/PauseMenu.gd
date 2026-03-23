@@ -194,16 +194,15 @@ func _input(event: InputEvent) -> void:
 			return
 		# Controller D-pad up/down for navigation
 		if event is InputEventJoypadButton and event.pressed:
+			var focused := get_viewport().gui_get_focus_owner()
 			if event.button_index == JOY_BUTTON_DPAD_UP:
-				var prev = get_tree().get_prev_focusable_control(get_viewport().gui_get_focus_owner())
-				if prev:
-					prev.grab_focus()
+				if focused:
+					focused.find_prev_valid_focus().grab_focus()
 				get_viewport().set_input_as_handled()
 				return
 			if event.button_index == JOY_BUTTON_DPAD_DOWN:
-				var next = get_tree().get_next_focusable_control(get_viewport().gui_get_focus_owner())
-				if next:
-					next.grab_focus()
+				if focused:
+					focused.find_next_valid_focus().grab_focus()
 				get_viewport().set_input_as_handled()
 				return
 	if _rebinding_action.is_empty():
