@@ -101,6 +101,11 @@ func _ready() -> void:
 	floor_snap_length = 6.0
 	if _sprite:
 		_sprite.play("idle")
+		# Apply player-specific coloring
+		if controller_device == 0:
+			_sprite.modulate = Color(1.0, 0.7, 0.4)  # Player 1: Warm orange
+		else:
+			_sprite.modulate = Color(0.4, 0.8, 1.0)  # Player 2: Cool cyan
 	# Attach bubble-gun sprite at runtime (avoids modifying Player.tscn).
 	var gun_tex := load("res://assets/sprites/s_bubble_gun.png")
 	if gun_tex:
