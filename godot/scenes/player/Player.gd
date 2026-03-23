@@ -91,6 +91,7 @@ var _gun_sprite: Sprite2D = null
 var _bubble_trap_visual: Node2D = null
 var _escape_prompt_label: Label = null
 var _escape_progress_bar: ProgressBar = null
+var _player_color: Color = Color.WHITE  # Base color for this player
 
 
 func _ready() -> void:
@@ -103,9 +104,10 @@ func _ready() -> void:
 		_sprite.play("idle")
 		# Apply player-specific coloring
 		if controller_device == 0:
-			_sprite.modulate = Color(1.0, 0.6, 0.8)  # Player 1: Pink
+			_player_color = Color(1.0, 0.6, 0.8)  # Player 1: Pink
 		else:
-			_sprite.modulate = Color(0.8, 0.5, 1.0)  # Player 2: Purple
+			_player_color = Color(0.8, 0.5, 1.0)  # Player 2: Purple
+		_sprite.modulate = _player_color
 	# Attach bubble-gun sprite at runtime (avoids modifying Player.tscn).
 	var gun_tex := load("res://assets/sprites/s_bubble_gun.png")
 	if gun_tex:
@@ -413,7 +415,7 @@ func enter_bubble() -> void:
 func _exit_bubble() -> void:
 	_state = State.AIR
 	if _sprite:
-		_sprite.modulate = Color.WHITE
+		_sprite.modulate = _player_color
 	if _bubble_trap_visual:
 		_bubble_trap_visual.queue_free()
 		_bubble_trap_visual = null
@@ -430,7 +432,7 @@ func _burst_bubble() -> void:
 	_state = State.AIR
 	velocity.y = -120.0  # Small upward bounce on burst
 	if _sprite:
-		_sprite.modulate = Color.WHITE
+		_sprite.modulate = _player_color
 	if _bubble_trap_visual:
 		_bubble_trap_visual.queue_free()
 		_bubble_trap_visual = null
@@ -531,7 +533,7 @@ func _respawn() -> void:
 	_state = State.AIR
 	_iframes_timer = IFRAMES_DURATION
 	if _sprite:
-		_sprite.modulate = Color.WHITE
+		_sprite.modulate = _player_color
 		_sprite.play("idle")
 	if controller_device == 0:
 		GameState.player1_respawned.emit()
