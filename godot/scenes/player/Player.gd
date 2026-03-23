@@ -402,6 +402,8 @@ func enter_bubble() -> void:
 	_bubble_hits = 0
 	_bubble_timer = 0.0
 	velocity = Vector2.ZERO
+	if _sprite:
+		_sprite.play("jump")
 
 	# Create visual bubble around player
 	_bubble_trap_visual = Sprite2D.new()
